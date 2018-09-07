@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://cews.filenet.metlife.com.mx/WSDLFile/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="WSDLFile" targetNamespace="http://cews.filenet.metlife.com.mx/WSDLFile/">
+	<wsdl:types>
+		<xsd:schema targetNamespace="http://cews.filenet.metlife.com.mx/WSDLFile/">
+			<xsd:element name="SearchDocRq">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element maxOccurs="1" minOccurs="1" name="ObjectStore" type="xsd:base64Binary"/>
+						<xsd:element maxOccurs="1" minOccurs="1" name="User" type="xsd:base64Binary"/>
+						<xsd:element maxOccurs="1" minOccurs="1" name="Password" type="xsd:base64Binary"/>
+						<xsd:element maxOccurs="1" minOccurs="1" name="DocClass" type="xsd:base64Binary"/>
+						<xsd:element maxOccurs="1" minOccurs="1" name="QueryCondition" type="xsd:base64Binary"/>
+						<xsd:element maxOccurs="1" minOccurs="0" name="Path" type="xsd:base64Binary"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="SearchDocRs">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element maxOccurs="1" minOccurs="1" name="OperationStatCd" type="xsd:string"/>
+						<xsd:element maxOccurs="1" minOccurs="0" name="ErrStatDesc" type="xsd:string"/>
+						<xsd:element maxOccurs="1" minOccurs="0" name="Documents" type="tns:Documents"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:complexType name="Metadata">
+				<xsd:sequence>
+					<xsd:element maxOccurs="1" minOccurs="1" name="Key" nillable="false" type="xsd:base64Binary"/>
+					<xsd:element maxOccurs="1" minOccurs="1" name="Value" nillable="false" type="xsd:base64Binary"/>
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="File">
+				<xsd:sequence>
+					<xsd:element maxOccurs="1" minOccurs="1" name="MimeType" type="xsd:base64Binary"/>
+					<xsd:element maxOccurs="1" minOccurs="1" name="Filenm" type="xsd:base64Binary"/>
+					<xsd:element maxOccurs="1" minOccurs="1" name="Content" type="xsd:base64Binary"/>
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="Documents">
+				<xsd:sequence>
+					<xsd:element maxOccurs="unbounded" minOccurs="0" name="Document" type="tns:Document"/>
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="Document">
+				<xsd:sequence>
+					<xsd:element maxOccurs="unbounded" minOccurs="0" name="Metadata" type="tns:Metadata"/>
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="SecurityGroup">
+				<xsd:sequence>
+					<xsd:element maxOccurs="unbounded" minOccurs="0" name="Security" type="tns:Security"/>
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="Security">
+				<xsd:sequence>
+					<xsd:element maxOccurs="1" minOccurs="1" name="SecurityTarget" type="xsd:base64Binary"/>
+					<xsd:element maxOccurs="1" minOccurs="1" name="SecurityPrincipal" type="xsd:base64Binary"/>
+					<xsd:element maxOccurs="1" minOccurs="1" name="SecurityAccess" type="xsd:base64Binary"/>
+					<xsd:element maxOccurs="1" minOccurs="1" name="SecurityAccessType" type="xsd:base64Binary"/>
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:element name="InsertDocRq">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element maxOccurs="1" minOccurs="1" name="ObjectStore" type="xsd:base64Binary"/>
+						<xsd:element maxOccurs="1" minOccurs="1" name="DocClass" type="xsd:base64Binary"/>
+						<xsd:element maxOccurs="1" minOccurs="1" name="Path" type="xsd:base64Binary"/>
+						<xsd:element maxOccurs="1" minOccurs="1" name="Duplicate" type="xsd:base64Binary"/>
+						<xsd:element maxOccurs="1" minOccurs="0" name="SecurityGrp" type="tns:SecurityGroup"/>
+						<xsd:element maxOccurs="1" minOccurs="1" name="Properties" type="tns:Document"/>
+						<xsd:element maxOccurs="1" minOccurs="1" name="Filenm" type="xsd:base64Binary"/>
+						<xsd:element maxOccurs="1" minOccurs="1" name="Content" type="xsd:base64Binary"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="InsertDocRs">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element maxOccurs="1" minOccurs="1" name="OperationStatCd" type="xsd:string"/>
+						<xsd:element maxOccurs="1" minOccurs="0" name="ErrStatDesc" type="xsd:string"/>
+						<xsd:element maxOccurs="1" minOccurs="0" name="GUID" type="xsd:base64Binary"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="GetDocRq">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element maxOccurs="1" minOccurs="1" name="ObjectStore" type="xsd:base64Binary"/>
+						<xsd:element maxOccurs="1" minOccurs="1" name="User" type="xsd:base64Binary"/>
+						<xsd:element maxOccurs="1" minOccurs="1" name="Password" type="xsd:base64Binary"/>
+						<xsd:element maxOccurs="1" minOccurs="1" name="GUID" type="xsd:base64Binary"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="GetDocRs">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element maxOccurs="1" minOccurs="1" name="OperationStatCd" type="xsd:string"/>
+						<xsd:element maxOccurs="1" minOccurs="0" name="ErrStatDesc" type="xsd:string"/>
+						<xsd:element maxOccurs="1" minOccurs="0" name="File" type="tns:File"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:schema>
+	</wsdl:types>
+	<wsdl:message name="searchDocumentsRequest">
+		<wsdl:part element="tns:SearchDocRq" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="searchDocumentsResponse">
+		<wsdl:part element="tns:SearchDocRs" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="getContentRequest">
+		<wsdl:part element="tns:GetDocRq" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="getContentResponse">
+		<wsdl:part element="tns:GetDocRs" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="insertDocumentRequest">
+		<wsdl:part element="tns:InsertDocRq" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="insertDocumentResponse">
+		<wsdl:part element="tns:InsertDocRs" name="parameters">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:portType name="WSDLFile">
+		<wsdl:operation name="searchDocuments">
+			<wsdl:input message="tns:searchDocumentsRequest"/>
+			<wsdl:output message="tns:searchDocumentsResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="getDocument">
+			<wsdl:input message="tns:getContentRequest"/>
+			<wsdl:output message="tns:getContentResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="insertDocument">
+			<wsdl:input message="tns:insertDocumentRequest"/>
+			<wsdl:output message="tns:insertDocumentResponse"/>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="WSDLFileSOAP" type="tns:WSDLFile">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="searchDocuments">
+			<soap:operation soapAction="http://cews.filenet.metlife.com.mx/WSDLFile/Operation"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getDocument">
+			<soap:operation soapAction="http://cews.filenet.metlife.com.mx/WSDLFile/Operation1"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="insertDocument">
+			<soap:operation soapAction="http://cews.filenet.metlife.com.mx/WSDLFile/Operation2"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="WSDLFile">
+		<wsdl:port binding="tns:WSDLFileSOAP" name="WSDLFileSOAP">
+			<soap:address location="http://10.170.62.210:9082/FileNetService/services/WSDLFileSOAP"/>
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

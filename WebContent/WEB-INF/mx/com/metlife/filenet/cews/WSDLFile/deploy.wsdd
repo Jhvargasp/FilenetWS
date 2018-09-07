@@ -1,0 +1,119 @@
+<!-- Use this file to deploy some handlers/chains and services      -->
+<!-- Two ways to do this:                                           -->
+<!--   java org.apache.axis.client.AdminClient deploy.wsdd          -->
+<!--      after the axis server is running                          -->
+<!-- or                                                             -->
+<!--   java org.apache.axis.utils.Admin client|server deploy.wsdd   -->
+<!--      from the same directory that the Axis engine runs         -->
+
+<deployment
+    xmlns="http://xml.apache.org/axis/wsdd/"
+    xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
+
+  <!-- Services from WSDLFile WSDL service -->
+
+  <service name="WSDLFileSOAP" provider="java:RPC" style="document" use="literal">
+      <parameter name="wsdlTargetNamespace" value="http://cews.filenet.metlife.com.mx/WSDLFile/"/>
+      <parameter name="wsdlServiceElement" value="WSDLFile"/>
+      <parameter name="schemaUnqualified" value="http://cews.filenet.metlife.com.mx/WSDLFile/"/>
+      <parameter name="wsdlServicePort" value="WSDLFileSOAP"/>
+      <parameter name="className" value="mx.com.metlife.filenet.cews.WSDLFile.WSDLFileSOAPSkeleton"/>
+      <parameter name="wsdlPortType" value="WSDLFile"/>
+      <parameter name="typeMappingVersion" value="1.2"/>
+      <parameter name="allowedMethods" value="*"/>
+
+      <typeMapping
+        xmlns:ns="http://cews.filenet.metlife.com.mx/WSDLFile/"
+        qname="ns:>GetDocRs"
+        type="java:mx.com.metlife.filenet.cews.WSDLFile.GetDocRs"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://cews.filenet.metlife.com.mx/WSDLFile/"
+        qname="ns:>InsertDocRq"
+        type="java:mx.com.metlife.filenet.cews.WSDLFile.InsertDocRq"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://cews.filenet.metlife.com.mx/WSDLFile/"
+        qname="ns:Metadata"
+        type="java:mx.com.metlife.filenet.cews.WSDLFile.Metadata"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://cews.filenet.metlife.com.mx/WSDLFile/"
+        qname="ns:>InsertDocRs"
+        type="java:mx.com.metlife.filenet.cews.WSDLFile.InsertDocRs"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <arrayMapping
+        xmlns:ns="http://cews.filenet.metlife.com.mx/WSDLFile/"
+        qname="ns:Document"
+        type="java:mx.com.metlife.filenet.cews.WSDLFile.Metadata[]"
+        innerType="cmp-ns:Metadata" xmlns:cmp-ns="http://cews.filenet.metlife.com.mx/WSDLFile/"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://cews.filenet.metlife.com.mx/WSDLFile/"
+        qname="ns:Security"
+        type="java:mx.com.metlife.filenet.cews.WSDLFile.Security"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <arrayMapping
+        xmlns:ns="http://cews.filenet.metlife.com.mx/WSDLFile/"
+        qname="ns:SecurityGroup"
+        type="java:mx.com.metlife.filenet.cews.WSDLFile.Security[]"
+        innerType="cmp-ns:Security" xmlns:cmp-ns="http://cews.filenet.metlife.com.mx/WSDLFile/"
+        encodingStyle=""
+      />
+      <arrayMapping
+        xmlns:ns="http://cews.filenet.metlife.com.mx/WSDLFile/"
+        qname="ns:Documents"
+        type="java:mx.com.metlife.filenet.cews.WSDLFile.Metadata[][]"
+        innerType="cmp-ns:Document" xmlns:cmp-ns="http://cews.filenet.metlife.com.mx/WSDLFile/"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://cews.filenet.metlife.com.mx/WSDLFile/"
+        qname="ns:>SearchDocRs"
+        type="java:mx.com.metlife.filenet.cews.WSDLFile.SearchDocRs"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://cews.filenet.metlife.com.mx/WSDLFile/"
+        qname="ns:>GetDocRq"
+        type="java:mx.com.metlife.filenet.cews.WSDLFile.GetDocRq"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://cews.filenet.metlife.com.mx/WSDLFile/"
+        qname="ns:>SearchDocRq"
+        type="java:mx.com.metlife.filenet.cews.WSDLFile.SearchDocRq"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://cews.filenet.metlife.com.mx/WSDLFile/"
+        qname="ns:File"
+        type="java:mx.com.metlife.filenet.cews.WSDLFile.File"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+  </service>
+</deployment>
