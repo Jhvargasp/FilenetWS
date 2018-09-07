@@ -7,6 +7,7 @@ public abstract interface IUtils
   public abstract List query(String paramString)
     throws Exception;
   
+  
   public abstract int execute(String paramString)
     throws Exception;
   
