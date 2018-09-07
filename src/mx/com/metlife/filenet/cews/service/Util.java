@@ -238,7 +238,7 @@ public class Util {
 				localInsertDocRs.setErrStatDesc("PARAMETER_ERROR_CE Parameter Properties can't be null or empty ");
 				return localInsertDocRs;
 			}
-			localObject1 = new UtilFilenetP8(localResourceBundle.getString("USERCONTENT"),
+			UtilFilenetP8 localObject1 = new UtilFilenetP8(localResourceBundle.getString("USERCONTENT"),
 					this.blowfish.decode(localResourceBundle.getString("PASSWORDCONTENT")),
 					decode(paramInsertDocRq.getObjectStore()),
 					getClass().getResourceAsStream("/WcmApiConfig.properties"));
@@ -254,13 +254,13 @@ public class Util {
 				ArrayList localArrayList2 = new ArrayList();
 				int i = 0;
 				for (int j = 0; j < paramInsertDocRq.getProperties().length; j++) {
-					localObject2 = paramInsertDocRq.getProperties()[j];
+					Metadata localObject2 = paramInsertDocRq.getProperties()[j];
 					if (localObject2 == null) {
 						localInsertDocRs.setOperationStatCd("010");
 						localInsertDocRs.setErrStatDesc("PARAMETER_ERROR_CE Metadata Tag must have parameters");
 						return localInsertDocRs;
 					}
-					localObject3 = decode(((Metadata) localObject2).getKey());
+					String localObject3 = decode(((Metadata) localObject2).getKey());
 					String str2 = decode(((Metadata) localObject2).getValue());
 					if ((str2 != null) && (localObject3 != null) && (((String) localObject3).length() > 0)
 							&& (decode(paramInsertDocRq.getFilenm()) != null)) {
@@ -469,7 +469,7 @@ public class Util {
 		GetDocRs localGetDocRs = new GetDocRs();
 		try {
 			String str1 = decode(paramGetDocRq.getUser());
-			localObject = decode(paramGetDocRq.getPassword());
+			String localObject = decode(paramGetDocRq.getPassword());
 			String str2 = decode(paramGetDocRq.getObjectStore());
 			String str3 = decode(paramGetDocRq.getGUID());
 			if (!validateParameter(str2)) {
@@ -513,7 +513,7 @@ public class Util {
 				i += j;
 			}
 			localTransportInputStream.getContentStream().close();
-			mx.com.metlife.filenet.cews.File localFile = new mx.com.metlife.filenet.cews.File();
+			mx.com.metlife.filenet.cews.WSDLFile.File localFile = new mx.com.metlife.filenet.cews.WSDLFile.File();
 			localFile.setContent(arrayOfByte);
 			localFile.setFilenm(localTransportInputStream.getFilename().getBytes());
 			localFile.setMimeType(localTransportInputStream.getMimeType().getBytes());
