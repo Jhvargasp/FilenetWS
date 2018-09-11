@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.Properties;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.jdom.JDOMException;
+//import org.jdom.JDOMException;
 
 public class P8Template
 {
@@ -72,7 +72,7 @@ public class P8Template
   {
     obj.delete();
   }
-  
+  /*
   public List getObjectList(Class objectClass)
     throws Exception
   {
@@ -125,8 +125,9 @@ public class P8Template
     }
     return ls;
   }
-  
-  public static List getObjects(Session sess, String store, String query)
+  */
+  /*
+  public static List getObjectsNoUsed(Session sess, String store, String query)
   {
     List results = null;
     
@@ -146,7 +147,8 @@ public class P8Template
     }
     catch (JDOMException localJDOMException) {}catch (IOException localIOException) {}
     return results;
-  }
+  }*/
+  /*
   
   public static List getObjects(String className, String store, Session sess, String orderBy, String[] st)
   {
@@ -188,7 +190,8 @@ public class P8Template
     catch (JDOMException localJDOMException) {}catch (IOException localIOException) {}
     return results;
   }
-  
+  */
+  /*
   public static List getObjects(String className, String store, Session sess, String orderBy, String[] st, String where)
   {
     List results = null;
@@ -319,5 +322,5 @@ public class P8Template
   public void setProps(Properties props)
   {
     this.props = props;
-  }
+  }*/
 }

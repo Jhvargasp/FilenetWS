@@ -1,38 +1,22 @@
 package com.intent.admin.filenetp8;
-
-import com.filenet.wcm.api.BadReferenceException;
-import com.filenet.wcm.api.BaseObject;
-import com.filenet.wcm.api.BaseObjects;
-import com.filenet.wcm.api.Choice;
-import com.filenet.wcm.api.ChoiceList;
-import com.filenet.wcm.api.ChoiceLists;
-import com.filenet.wcm.api.ClassDescription;
-import com.filenet.wcm.api.ClassDescriptions;
-import com.filenet.wcm.api.CustomObject;
-import com.filenet.wcm.api.Document;
-import com.filenet.wcm.api.Domain;
-import com.filenet.wcm.api.Domains;
-import com.filenet.wcm.api.EntireNetwork;
-import com.filenet.wcm.api.Folder;
-import com.filenet.wcm.api.GettableObject;
-import com.filenet.wcm.api.Link;
-import com.filenet.wcm.api.Links;
-import com.filenet.wcm.api.ObjectFactory;
-import com.filenet.wcm.api.ObjectStore;
-import com.filenet.wcm.api.ObjectStores;
-import com.filenet.wcm.api.Permission;
-import com.filenet.wcm.api.Permissions;
-import com.filenet.wcm.api.Property;
-import com.filenet.wcm.api.PropertyDescription;
-import com.filenet.wcm.api.PropertyDescriptions;
-import com.filenet.wcm.api.PropertyNotFoundException;
-import com.filenet.wcm.api.ReadableMetadataObject;
-import com.filenet.wcm.api.ReadableSecurityObject;
-import com.filenet.wcm.api.Session;
-import com.filenet.wcm.api.TransportInputStream;
-import com.filenet.wcm.api.Value;
-import com.filenet.wcm.api.Values;
-import com.filenet.wcm.api.WriteableSecurityObject;
+import com.filenet.api.collection.ObjectStoreSet;
+import com.filenet.api.collection.PropertyDescriptionList;
+import com.filenet.api.collection.PropertyDescriptionStringList;
+import com.filenet.api.collection.RepositoryRowSet;
+import com.filenet.api.constants.TypeID;
+import com.filenet.api.core.Connection;
+import com.filenet.api.core.Document;
+import com.filenet.api.core.Domain;
+import com.filenet.api.core.Factory;
+import com.filenet.api.core.ObjectStore;
+import com.filenet.api.core.Scope;
+import com.filenet.api.meta.ClassDescription;
+import com.filenet.api.meta.PropertyDescription;
+import com.filenet.api.property.Property;
+import com.filenet.api.query.RepositoryRow;
+import com.filenet.api.query.SearchSQL;
+import com.filenet.api.query.SearchScope;
+import com.filenet.api.util.UserContext;
 import com.intent.admin.IUtils;
 import com.intent.admin.file.UtilFile;
 import com.intent.admin.filenetp8.p8.Data;
@@ -54,13 +38,20 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
+import java.util.ResourceBundle;
 import java.util.TimeZone;
 import java.util.Vector;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import javax.security.auth.Subject;
+
 import org.apache.log4j.Logger;
 
 public class UtilFilenetP8 implements IUtils {
+	ResourceBundle BUNDLE = ResourceBundle.getBundle("WcmApiConfig");
+
 	private boolean uniquenessConstraint = true;
 	private String multivalueSplit = ";";
 	private HashMap securitytypeUser = new HashMap();
@@ -77,7 +68,7 @@ public class UtilFilenetP8 implements IUtils {
 	private String user = null;
 	private String password = null;
 	private String configFile = null;
-	private Session session = null;
+	//private Session session = null;
 	private String store = null;
 	private String urlWorkplace = null;
 
@@ -99,7 +90,7 @@ public class UtilFilenetP8 implements IUtils {
 		this.securityType.put("ALLOW", new Integer(1));
 		this.securityType.put("DENY", new Integer(2));
 	}
-
+/*
 	public List getOsNames() {
 		List names = new ArrayList();
 		EntireNetwork network = ObjectFactory.getEntireNetwork(getSession());
@@ -134,59 +125,7 @@ public class UtilFilenetP8 implements IUtils {
 	public void setUrlWorkplace(String urlWorkplace) {
 		this.urlWorkplace = urlWorkplace;
 	}
-
-	public UtilFilenetP8(String user, String password, String store, String server) {
-		this.securitytypeUser.put("USER", new Integer(2000));
-		this.securitytypeUser.put("GROUP", new Integer(2001));
-
-		this.securityLevelsMap.put("FULL_CONTROL", new Integer(999415));
-
-		this.securityLevelsMap.put("READ", new Integer(131201));
-
-		this.securityLevelsMap.put("VIEW", new Integer(131073));
-
-		this.securityLevelsMap.put("WRITE_DEFAULT", new Integer(132499));
-
-		this.securityLevelsMap.put("MAJOR_VERSION_DOCUMENT", new Integer(132567));
-		this.securityLevelsMap.put("MINOR_VERSION_DOCUMENT", new Integer(132563));
-
-		this.securityType.put("ALLOW", new Integer(1));
-		this.securityType.put("DENY", new Integer(2));
-
-		UtilFile file = new UtilFile();
-		java.util.Properties pr = System.getProperties();
-		UtilFile.write(pr.getProperty("user.home") + "/file.properties",
-				P8Template.contentWcmApi.toString().replaceAll("localhost", server), false);
-
-		Conect(user, password, pr.getProperty("user.home") + "/file.properties");
-		this.store = store;
-	}
-
-	public UtilFilenetP8(String user, String password, String store, InputStream inputStream) {
-		this.securitytypeUser.put("USER", new Integer(2000));
-		this.securitytypeUser.put("GROUP", new Integer(2001));
-
-		this.securityLevelsMap.put("FULL_CONTROL", new Integer(999415));
-
-		this.securityLevelsMap.put("READ", new Integer(131201));
-
-		this.securityLevelsMap.put("VIEW", new Integer(131073));
-
-		this.securityLevelsMap.put("WRITE_DEFAULT", new Integer(132499));
-
-		this.securityLevelsMap.put("MAJOR_VERSION_DOCUMENT", new Integer(132567));
-		this.securityLevelsMap.put("MINOR_VERSION_DOCUMENT", new Integer(132563));
-
-		this.securityType.put("ALLOW", new Integer(1));
-		this.securityType.put("DENY", new Integer(2));
-
-		UtilFile file = new UtilFile();
-		java.util.Properties pr = System.getProperties();
-
-		Conect(user, password, inputStream);
-		this.store = store;
-	}
-
+*/
 	public UtilFilenetP8(String user, String password, String store) {
 		this.securitytypeUser.put("USER", new Integer(2000));
 		this.securitytypeUser.put("GROUP", new Integer(2001));
@@ -233,70 +172,35 @@ public class UtilFilenetP8 implements IUtils {
 		this.user = user;
 	}
 
-	private void Conect(String puser, String ppassword, String pathConfig) {
-		this.user = puser;
-		this.password = ppassword;
-		this.configFile = pathConfig;
-		this.session = ObjectFactory.getSession("UtilFilenetP8", Session.DEFAULT, this.user, this.password);
-		if (pathConfig != null) {
-			try {
-				getSession().setConfiguration(new FileInputStream(pathConfig));
-			} catch (FileNotFoundException e) {
-				if (this.log.isDebugEnabled()) {
-					this.log.debug(e.getMessage());
-				}
-			}
-		}
-		getSession().verify();
+	private Connection con;
+	private Domain dom;
+	private String domainName;
+	private ObjectStoreSet ost;
+	private Vector osnames;
+	private boolean isConnected;
+	private UserContext uc;
+	
+	private void Conect(String puser, String ppassword) {
+		this.user=puser;
+		this.password=ppassword;
+		con = Factory.Connection.getConnection(BUNDLE.getString("url"));
+        Subject sub = UserContext.createSubject(con,user,password,BUNDLE.getString("context"));
+        uc = UserContext.get();
+		uc.pushSubject(sub);
+        dom = Factory.Domain.fetchInstance(con, null, null);
+        domainName = dom.get_Name();
+        ost = dom.get_ObjectStores();
+        isConnected = true;
+        System.out.println("Connected!!");
+		
 	}
-
-	private void Conect(String puser, String ppassword, InputStream stream) {
-		this.user = puser;
-		this.password = ppassword;
-
-		this.session = ObjectFactory.getSession("UtilFilenetP8", Session.DEFAULT, this.user, this.password);
-		if (stream != null) {
-			getSession().setConfiguration(stream);
-		}
-		getSession().verify();
-	}
-
 	public boolean isConnected() {
-		if (this.session != null) {
+		if (isConnected && this.ost != null) {
 			return true;
 		}
 		return false;
 	}
-
-	private void Conect(String puser, String ppassword) {
-		this.user = puser;
-		this.password = ppassword;
-		this.session = ObjectFactory.getSession("UtilFilenetP8", Session.DEFAULT, this.user, this.password);
-		getSession().verify();
-	}
-
-	private void Conect() {
-		if (getSession() == null) {
-			if (this.configFile != null) {
-				Conect(this.user, this.password, this.configFile);
-			} else {
-				Conect(this.user, this.password);
-			}
-		}
-	}
-
-	private void Conect(boolean createNew) {
-		if (this.configFile != null) {
-			Conect(this.user, this.password, this.configFile);
-		} else {
-			Conect(this.user, this.password);
-		}
-	}
-
-	public void disconnect() {
-		this.session = null;
-	}
-
+/*
 	public List getContainnes(Object folder, int objectType) {
 		List objects = new ArrayList();
 		BaseObjects retrievedDocs = null;
@@ -591,56 +495,6 @@ public class UtilFilenetP8 implements IUtils {
 		return props;
 	}
 
-	public static String formatDate(String stringDate) {
-		Pattern patron = Pattern.compile(patternDate);
-		Matcher encaja = patron.matcher(stringDate);
-		ArrayList al = new ArrayList();
-		while (encaja.find()) {
-			int inicio = encaja.start();
-			int fin = encaja.end();
-			String fecha = stringDate.substring(inicio, fin);
-			al.add(fecha);
-		}
-		for (int i = 0; i < al.size(); i++) {
-			String fecha = (String) al.get(i);
-			try {
-				TimeZone tx = TimeZone.getTimeZone(timeZone);
-				formatDate.setTimeZone(tx);
-				Date fec = formatDate.parse(fecha);
-				tx = TimeZone.getTimeZone("GMT");
-				formatDate.setTimeZone(tx);
-				String fecact = formatDate.format(fec);
-				stringDate = stringDate.replaceAll(fecha, fecact);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-		return stringDate;
-	}
-
-	public List query(String query) {
-		Conect();
-		List ret = null;
-		if (getSession() != null) {
-			System.out.println("Before fix format: " + query);
-			query = formatDate(query);
-			System.out.println("After fix format: " + query);
-			List l = P8Template.getObjects(getSession(), this.store, query);
-			if (l != null) {
-				ret = new ArrayList();
-				for (int i = 0; i < l.size(); i++) {
-					List vars = (List) l.get(i);
-					HashMap map = new HashMap();
-					for (int j = 0; j < vars.size(); j++) {
-						map.put(((Data) vars.get(j)).getName(), ((Data) vars.get(j)).getValue());
-					}
-					ret.add(map);
-				}
-			}
-		}
-		return ret;
-	}
-
 	public List query(String tableName, String[] columns, String[] filTterColumns, String[] filtterValues) {
 		Conect();
 		if (getSession() != null) {
@@ -762,29 +616,7 @@ public class UtilFilenetP8 implements IUtils {
 		return updates;
 	}
 
-	public Document createDocumentAndContent(String folderParent, String className, String[] columns, Object[] values,
-			String urlContent) throws Exception {
-		Conect();
-		ObjectStore objectStore = ObjectFactory.getObjectStore(this.store, getSession());
-		com.filenet.wcm.api.Properties objProps = getP8Properties(columns, values);
-		BaseObject object = null;
-		object = objectStore.createObject(className, objProps, null);
-		if ((urlContent != null) || (urlContent.trim().length() > 0)) {
-			if (new File(urlContent).exists()) {
-				TransportInputStream input = new TransportInputStream(new FileInputStream(urlContent));
-				input.setFilename(urlContent);
-				input.setMimeType(SearchUtils.getMimeType(urlContent));
-				((Document) object).setContent(input, true, false);
-			} else {
-				this.log.debug("The document " + urlContent
-						+ " doesn't exist or can't access. The Document is created without image");
-			}
-		}
-		((Document) object).file((Folder) objectStore.getObject(2, folderParent), this.uniquenessConstraint);
-
-		return (Document) object;
-	}
-
+	
 	public Object insert(String tableName, String[] columns, Object[] values) throws Exception {
 		Conect();
 		ObjectStore objectStore = ObjectFactory.getObjectStore(this.store, getSession());
@@ -1199,38 +1031,6 @@ public class UtilFilenetP8 implements IUtils {
 		return objects;
 	}
 
-	public HashMap getPropertyDefinitionsByClass(String idOrClassName) {
-		Conect();
-		HashMap objects = new HashMap();
-		if ((idOrClassName != null) && (idOrClassName.length() > 0)) {
-			ClassDescription classDesc = (ClassDescription) ObjectFactory.getObjectStore(this.store, getSession())
-					.getObject(25, idOrClassName);
-			PropertyDescriptions pdesc = classDesc.getPropertyDescriptions(false);
-			for (int i = 0; i < pdesc.size(); i++) {
-				PropertyDescription propDesc = (PropertyDescription) pdesc.get(i);
-				try {
-					if (!propDesc.getPropertyBooleanValue("IsSystemGenerated")) {
-						HashMap props = new HashMap();
-						props.put("IsValueRequired", propDesc.getPropertyStringValue("IsValueRequired"));
-						props.put("SymbolicName", propDesc.getPropertyStringValue("SymbolicName"));
-						props.put("DataType", new Integer(propDesc.getPropertyIntValue("DataType")));
-						props.put("Cardinality", new Integer(propDesc.getPropertyIntValue("Cardinality")));
-						props.put("Settability", new Integer(propDesc.getPropertyIntValue("Settability")));
-						if (propDesc.getPropertyIntValue("DataType") == 8) {
-							props.put("MaximumLengthString",
-									new Integer(propDesc.getPropertyIntValue("MaximumLengthString")));
-						}
-						objects.put(propDesc.getName(), props);
-					}
-				} catch (PropertyNotFoundException e) {
-					if (this.log.isDebugEnabled()) {
-						this.log.debug(e.getMessage());
-					}
-				}
-			}
-		}
-		return objects;
-	}
 
 	public List getLinksByDocument(Object idDocumentOrDocument) {
 		Conect();
@@ -1295,6 +1095,15 @@ public class UtilFilenetP8 implements IUtils {
 		return obj;
 	}
 
+
+
+	
+	public void setSession(Session session) {
+		this.session = session;
+	}
+
+	*/
+
 	public boolean isUniquenessConstraint() {
 		return this.uniquenessConstraint;
 	}
@@ -1315,18 +1124,6 @@ public class UtilFilenetP8 implements IUtils {
 		formatDate = new SimpleDateFormat(strformatDate);
 	}
 
-	public static SimpleDateFormat getFormatDate() {
-		return formatDate;
-	}
-
-	public void setSession(Session session) {
-		this.session = session;
-	}
-
-	public static String getTimeZone() {
-		return timeZone;
-	}
-
 	public static void setTimeZone(String timeZone) {
 		timeZone = timeZone;
 	}
@@ -1342,4 +1139,155 @@ public class UtilFilenetP8 implements IUtils {
 	public static void setFormatDate(SimpleDateFormat formatDate) {
 		formatDate = formatDate;
 	}
+	
+	public static SimpleDateFormat getFormatDate() {
+		return formatDate;
+	}
+	
+	public static String getTimeZone() {
+		return timeZone;
+	}
+	public HashMap getPropertyDefinitionsByClass(String idOrClassName) {
+		//Conect();
+		HashMap objects = new HashMap();
+		if ((idOrClassName != null) && (idOrClassName.length() > 0)) {
+			ClassDescription classDesc = Factory.ClassDescription.fetchInstance(fetchOS(), idOrClassName, null);
+ 			PropertyDescriptionList pdesc = classDesc.get_PropertyDescriptions();
+			for (int i = 0; i < pdesc.size(); i++) {
+				PropertyDescription propDesc = (PropertyDescription) pdesc.get(i);
+				try {
+					if (!propDesc.get_IsSystemGenerated() && !propDesc.get_IsSystemOwned()) {
+						HashMap props = new HashMap();
+						props.put("IsValueRequired", propDesc.get_IsValueRequired());
+						props.put("SymbolicName", propDesc.get_SymbolicName());
+						props.put("DataType", propDesc.get_DataType());
+						props.put("Cardinality", propDesc.get_Cardinality());
+						props.put("Settability", propDesc.get_Settability());
+						
+						if (propDesc.get_DataType() == TypeID.STRING) {
+							//props.put("MaximumLengthString",
+								//	new Integer(propDesc.getProperties().getPropertyIntValue("MaximumLengthString")));
+						}
+						objects.put(propDesc.get_SymbolicName(), props);
+					}
+				} catch (Exception e) {
+					if (this.log.isDebugEnabled()) {
+						this.log.debug(e.getMessage());
+					}
+				}
+			}
+		}
+		return objects;
+	}
+	
+	public ObjectStore fetchOS(String name)
+    {
+        ObjectStore os = Factory.ObjectStore.fetchInstance(dom, name, null);
+        return os;
+    }
+	
+	public ObjectStore fetchOS()
+    {
+        ObjectStore os = Factory.ObjectStore.fetchInstance(dom, BUNDLE.getString("objectStore"), null);
+        return os;
+    }
+	
+	
+	public List query(String columns,String className, String where) {
+		List ret = null;
+		if (isConnected) {
+			where = formatDate(where);
+			System.out.println("After fix format: " + where);
+			
+			RepositoryRowSet rr = fetchResultsRowSet(fetchOS(), columns, className, where, 0); //P8Template.getObjects(getSession(), this.store, query);
+			Iterator l=rr.iterator();
+			if (l != null) {
+				ret = new ArrayList();
+				while (l.hasNext()) {
+					RepositoryRow rrow = (RepositoryRow) l.next();
+					HashMap map = new HashMap();
+					Iterator itProps=rrow.getProperties().iterator();
+					while (itProps.hasNext()) {
+						Property prop = (Property) itProps.next();
+						if(prop.getObjectValue()!=null) {
+							map.put(prop.getPropertyName(), prop.getObjectValue());
+						}
+					}
+					ret.add(map);
+				}
+			}
+		}
+		return ret;
+	}
+
+	public static RepositoryRowSet fetchResultsRowSet(ObjectStore os, String select,
+    		String from, String where, int rows)
+    {
+    	RepositoryRowSet rrs = null;
+    	SearchSQL q = new SearchSQL();
+    	SearchScope ss = new SearchScope(os);
+    	q.setSelectList(select);
+    	q.setFromClauseInitialValue(from, null, false);
+    	if(!where.equals(""))
+    	{
+    		q.setWhereClause(where);
+    	}
+    	if(!(rows == 0))
+    	{
+    		q.setMaxRecords(rows);
+    	}
+    	rrs = ss.fetchRows(q, null, null, null);
+    	return rrs;
+    }
+    
+	public static String formatDate(String stringDate) {
+		Pattern patron = Pattern.compile(patternDate);
+		Matcher encaja = patron.matcher(stringDate);
+		ArrayList al = new ArrayList();
+		while (encaja.find()) {
+			int inicio = encaja.start();
+			int fin = encaja.end();
+			String fecha = stringDate.substring(inicio, fin);
+			al.add(fecha);
+		}
+		for (int i = 0; i < al.size(); i++) {
+			String fecha = (String) al.get(i);
+			try {
+				TimeZone tx = TimeZone.getTimeZone(timeZone);
+				formatDate.setTimeZone(tx);
+				Date fec = formatDate.parse(fecha);
+				tx = TimeZone.getTimeZone("GMT");
+				formatDate.setTimeZone(tx);
+				String fecact = formatDate.format(fec);
+				stringDate = stringDate.replaceAll(fecha, fecact);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return stringDate;
+	}
+
+	/*public Document createDocumentAndContent(String folderParent, String className, String[] columns, Object[] values,
+			String urlContent) throws Exception {
+		
+		ObjectStore objectStore = ObjectFactory.getObjectStore(this.store, getSession());
+		com.filenet.wcm.api.Properties objProps = getP8Properties(columns, values);
+		BaseObject object = null;
+		object = objectStore.createObject(className, objProps, null);
+		if ((urlContent != null) || (urlContent.trim().length() > 0)) {
+			if (new File(urlContent).exists()) {
+				TransportInputStream input = new TransportInputStream(new FileInputStream(urlContent));
+				input.setFilename(urlContent);
+				input.setMimeType(SearchUtils.getMimeType(urlContent));
+				((Document) object).setContent(input, true, false);
+			} else {
+				this.log.debug("The document " + urlContent
+						+ " doesn't exist or can't access. The Document is created without image");
+			}
+		}
+		((Document) object).file((Folder) objectStore.getObject(2, folderParent), this.uniquenessConstraint);
+
+		return (Document) object;
+	}*/
+
 }

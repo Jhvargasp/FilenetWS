@@ -60,4 +60,9 @@ public class Blowfish
       throw new Exception("Decode Password Exception");
     }
   }
+  
+  public static void main(String[] args) throws Exception {
+	Blowfish blowfish = new Blowfish();
+	System.out.println(blowfish.encode("sistemas2012")); 
+}
 }

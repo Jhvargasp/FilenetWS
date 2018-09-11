@@ -9,12 +9,12 @@ import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import org.jdom.Attribute;
+/*import org.jdom.Attribute;
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.JDOMException;
 import org.jdom.Namespace;
-import org.jdom.input.SAXBuilder;
+import org.jdom.input.SAXBuilder;*/
 import org.xml.sax.InputSource;
 
 public class SearchUtils
@@ -148,7 +148,7 @@ public class SearchUtils
     }
     return st;
   }
-  
+  /*
   public static List searchAsCollection(String xml, boolean linkProperty)
     throws JDOMException, IOException
   {
@@ -232,4 +232,5 @@ public class SearchUtils
     }
     return ls;
   }
+  */
 }

@@ -1,5 +1,7 @@
 package mx.com.metlife.filenet.cews.service;
 
+import com.filenet.api.constants.Cardinality;
+import com.filenet.api.constants.TypeID;
 import com.filenet.wcm.api.BadReferenceException;
 import com.filenet.wcm.api.BaseRuntimeException;
 import com.filenet.wcm.api.Document;
@@ -47,7 +49,7 @@ public class Util {
 				localSearchDocRs.setErrStatDesc("PARAMETER_ERROR_CE Parameter Password can't be empty ");
 				return localSearchDocRs;
 			}
-			localObject1 = this.blowfish.decode((String) localObject1);
+			//localObject1 = this.blowfish.decode((String) localObject1);
 			this.log.debug("Validate ObjectStore");
 			String str2 = decode(paramSearchDocRq.getObjectStore());
 			if (!validateParameter(str2)) {
@@ -79,8 +81,7 @@ public class Util {
 			}
 			this.log.debug("Params");
 			this.log.debug(str1 + "--" + str2 + "--" + str3 + "--" + str4 + "--" + str5);
-			UtilFilenetP8 localUtilFilenetP8 = new UtilFilenetP8(str1, (String) localObject1, str2,
-					getClass().getResourceAsStream("/WcmApiConfig.properties"));
+			UtilFilenetP8 localUtilFilenetP8 = new UtilFilenetP8(str1, (String) localObject1, str2);
 			UtilFilenetP8.setFormatDate(ResourceBundle.getBundle("WcmApiConfig").getString("DATEFORMAT"));
 			UtilFilenetP8.setPatternDate(ResourceBundle.getBundle("WcmApiConfig").getString("DATEPATTERN"));
 			UtilFilenetP8.setTimeZone(ResourceBundle.getBundle("WcmApiConfig").getString("TIMEZONE"));
@@ -93,8 +94,9 @@ public class Util {
 			}
 			String str7 = "SELECT " + fixParams(localHashMap1) + " FROM ";
 			str7 = str7 + str3 + " WHERE " + "VersionStatus" + "= 1 " + " AND " + str6 + parseCharacters(str5);
+			String where="VersionStatus" + "= 1 " + " AND " + str6 + parseCharacters(str5);
 			this.log.debug("Query : " + str7);
-			List localList2 = localUtilFilenetP8.query(str7);
+			List localList2 = localUtilFilenetP8.query( fixParams(localHashMap1),str3,where);
 			this.log.debug("Results : ".concat(String.valueOf(localList2.size())));
 			String[] arrayOfString = fixParams(localHashMap1).split(",");
 			Metadata[][] arrayOfMetadata = new Metadata[localList2.size()][];
@@ -118,6 +120,8 @@ public class Util {
 					}
 					if (localHashMap2.get(arrayOfString[k]) != null) {
 						localMetadata.setValue(localObject2.toString().getBytes());
+					}else {
+						localMetadata.setValue("".toString().getBytes());
 					}
 					arrayOfMetadata1[k] = localMetadata;
 				}
@@ -151,7 +155,7 @@ public class Util {
 		while (localIterator.hasNext()) {
 			String str2 = (String) localIterator.next();
 			HashMap localHashMap = (HashMap) paramHashMap.get(str2);
-			if ((Integer.parseInt(localHashMap.get("Cardinality").toString()) == 0)
+			if (((localHashMap.get("Cardinality")) == Cardinality.SINGLE)
 					&& (!"SourceDocument".equals(localHashMap.get("SymbolicName").toString()))) {
 				str1 = str1 + localHashMap.get("SymbolicName").toString().concat(",");
 			}
@@ -170,7 +174,7 @@ public class Util {
 		while (localIterator.hasNext()) {
 			String str = (String) localIterator.next();
 			HashMap localHashMap = (HashMap) paramHashMap.get(str);
-			if (Integer.parseInt(localHashMap.get("DataType").toString()) == 3) {
+			if (localHashMap.get("DataType")==TypeID.DATE ) {
 				localArrayList.add(localHashMap.get("SymbolicName").toString());
 			}
 		}
@@ -179,6 +183,7 @@ public class Util {
 		return localArrayList;
 	}
 
+	/*
 	public final InsertDocRs executeInsert(InsertDocRq paramInsertDocRq) {
 		this.log.debug("Start insert: ");
 		InsertDocRs localInsertDocRs = new InsertDocRs();
@@ -240,13 +245,11 @@ public class Util {
 			}
 			UtilFilenetP8 localObject1 = new UtilFilenetP8(localResourceBundle.getString("USERCONTENT"),
 					this.blowfish.decode(localResourceBundle.getString("PASSWORDCONTENT")),
-					decode(paramInsertDocRq.getObjectStore()),
-					getClass().getResourceAsStream("/WcmApiConfig.properties"));
+					decode(paramInsertDocRq.getObjectStore()));
 			UtilFilenetP8.setFormatDate(ResourceBundle.getBundle("WcmApiConfig").getString("DATEFORMAT"));
 			UtilFilenetP8.setPatternDate(ResourceBundle.getBundle("WcmApiConfig").getString("DATEPATTERN"));
 			UtilFilenetP8.setTimeZone(ResourceBundle.getBundle("WcmApiConfig").getString("TIMEZONE"));
-			((UtilFilenetP8) localObject1)
-					.setMultivalueSplit(ResourceBundle.getBundle("WcmApiConfig").getString("SPLITCHARACTER"));
+			localObject1.setMultivalueSplit(ResourceBundle.getBundle("WcmApiConfig").getString("SPLITCHARACTER"));
 			byte[] arrayOfByte = paramInsertDocRq.getContent();
 			if (writeFile(arrayOfByte, decode(paramInsertDocRq.getFilenm()))) {
 				this.log.debug("Temp Document created: " + decode(paramInsertDocRq.getFilenm()));
@@ -291,7 +294,7 @@ public class Util {
 				}
 				String str1 = decode(paramInsertDocRq.getDuplicate());
 				if ((str1 != null) && ((str1.equalsIgnoreCase("True")) || (str1.equalsIgnoreCase("False")))) {
-					((UtilFilenetP8) localObject1).setUniquenessConstraint(Boolean.valueOf(str1).booleanValue());
+					localObject1.setUniquenessConstraint(Boolean.valueOf(str1).booleanValue());
 				} else {
 					localInsertDocRs.setOperationStatCd("010");
 					localInsertDocRs
@@ -302,7 +305,7 @@ public class Util {
 						decode(paramInsertDocRq.getPath()), decode(paramInsertDocRq.getDocClass()),
 						(String[]) localArrayList1.toArray(new String[localArrayList1.size()]),
 						localArrayList2.toArray(), decode(paramInsertDocRq.getFilenm()));
-				Object localObject3 = paramInsertDocRq.getSecurityGrp();
+				Security[] localObject3 = paramInsertDocRq.getSecurityGrp();
 				if (localObject3 != null) {
 					for (int k = 0; k < localObject3.length; k++) {
 						if (localObject3[k] == null) {
@@ -370,7 +373,7 @@ public class Util {
 		}
 		return localInsertDocRs;
 	}
-
+*/
 	private boolean validateParameter(String paramString) {
 		return (paramString != null) && (paramString.length() > 0);
 	}
@@ -464,6 +467,7 @@ public class Util {
 		return true;
 	}
 
+	/*
 	public final GetDocRs executeGetDocument(GetDocRq paramGetDocRq) {
 		this.log.debug("Start GetContent: ");
 		GetDocRs localGetDocRs = new GetDocRs();
@@ -499,8 +503,8 @@ public class Util {
 			}
 			localObject = this.blowfish.decode((String) localObject);
 			this.log.debug(str1 + "--" + "--" + str2 + "--" + str3);
-			UtilFilenetP8 localUtilFilenetP8 = new UtilFilenetP8(str1, (String) localObject, str2,
-					getClass().getResourceAsStream("/WcmApiConfig.properties"));
+			UtilFilenetP8 localUtilFilenetP8 = new UtilFilenetP8(str1, (String) localObject, str2);
+			
 			TransportInputStream localTransportInputStream = localUtilFilenetP8.getContent(str3);
 			InputStream localInputStream = localTransportInputStream.getContentStream();
 			long l = localTransportInputStream.getContentSize();
@@ -527,4 +531,5 @@ public class Util {
 		}
 		return localGetDocRs;
 	}
+	*/
 }
