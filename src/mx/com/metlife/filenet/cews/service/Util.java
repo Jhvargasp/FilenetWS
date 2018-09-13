@@ -2,6 +2,7 @@ package mx.com.metlife.filenet.cews.service;
 
 import com.filenet.api.constants.Cardinality;
 import com.filenet.api.constants.TypeID;
+import com.filenet.api.core.ContentTransfer;
 import com.filenet.wcm.api.BadReferenceException;
 import com.filenet.wcm.api.BaseRuntimeException;
 import com.filenet.wcm.api.Document;
@@ -12,9 +13,12 @@ import com.filenet.wcm.api.RemoteServerException;
 import com.filenet.wcm.api.TransportInputStream;
 import com.filenet.wcm.api.UniquenessConstraintException;
 import com.intent.admin.filenetp8.UtilFilenetP8;
+
+import java.io.ByteArrayOutputStream;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.PrintStream;
+import java.nio.file.Files;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -25,6 +29,8 @@ import java.util.ResourceBundle;
 import java.util.Set;
 import mx.com.metlife.encrypt.Blowfish;
 import mx.com.metlife.filenet.cews.WSDLFile.*;
+
+import org.apache.commons.codec.binary.Base64;
 import org.apache.log4j.Logger;
 
 public class Util {
@@ -49,7 +55,7 @@ public class Util {
 				localSearchDocRs.setErrStatDesc("PARAMETER_ERROR_CE Parameter Password can't be empty ");
 				return localSearchDocRs;
 			}
-			//localObject1 = this.blowfish.decode((String) localObject1);
+			// localObject1 = this.blowfish.decode((String) localObject1);
 			this.log.debug("Validate ObjectStore");
 			String str2 = decode(paramSearchDocRq.getObjectStore());
 			if (!validateParameter(str2)) {
@@ -94,9 +100,9 @@ public class Util {
 			}
 			String str7 = "SELECT " + fixParams(localHashMap1) + " FROM ";
 			str7 = str7 + str3 + " WHERE " + "VersionStatus" + "= 1 " + " AND " + str6 + parseCharacters(str5);
-			String where="VersionStatus" + "= 1 " + " AND " + str6 + parseCharacters(str5);
+			String where = "VersionStatus" + "= 1 " + " AND " + str6 + parseCharacters(str5);
 			this.log.debug("Query : " + str7);
-			List localList2 = localUtilFilenetP8.query( fixParams(localHashMap1),str3,where);
+			List localList2 = localUtilFilenetP8.query(fixParams(localHashMap1), str3, where);
 			this.log.debug("Results : ".concat(String.valueOf(localList2.size())));
 			String[] arrayOfString = fixParams(localHashMap1).split(",");
 			Metadata[][] arrayOfMetadata = new Metadata[localList2.size()][];
@@ -120,7 +126,7 @@ public class Util {
 					}
 					if (localHashMap2.get(arrayOfString[k]) != null) {
 						localMetadata.setValue(localObject2.toString().getBytes());
-					}else {
+					} else {
 						localMetadata.setValue("".toString().getBytes());
 					}
 					arrayOfMetadata1[k] = localMetadata;
@@ -174,7 +180,7 @@ public class Util {
 		while (localIterator.hasNext()) {
 			String str = (String) localIterator.next();
 			HashMap localHashMap = (HashMap) paramHashMap.get(str);
-			if (localHashMap.get("DataType")==TypeID.DATE ) {
+			if (localHashMap.get("DataType") == TypeID.DATE) {
 				localArrayList.add(localHashMap.get("SymbolicName").toString());
 			}
 		}
@@ -183,7 +189,6 @@ public class Util {
 		return localArrayList;
 	}
 
-	/*
 	public final InsertDocRs executeInsert(InsertDocRq paramInsertDocRq) {
 		this.log.debug("Start insert: ");
 		InsertDocRs localInsertDocRs = new InsertDocRs();
@@ -196,7 +201,10 @@ public class Util {
 				return localInsertDocRs;
 			}
 			this.log.debug("Validate PASSWORDCONTENT");
-			if (!validateParameter(this.blowfish.decode(localResourceBundle.getString("PASSWORDCONTENT")))) {
+			// if
+			// (!validateParameter(this.blowfish.decode(localResourceBundle.getString("PASSWORDCONTENT"))))
+			// {
+			if (!validateParameter((localResourceBundle.getString("PASSWORDCONTENT")))) {
 				localInsertDocRs.setOperationStatCd("010");
 				localInsertDocRs.setErrStatDesc("PARAMETER_ERROR_CE Parameter Password can't be empty ");
 				return localInsertDocRs;
@@ -232,7 +240,10 @@ public class Util {
 				return localInsertDocRs;
 			}
 			this.log.debug("Validate Filenm");
-			if (!validateParameter(decode(paramInsertDocRq.getFilenm()))) {
+			String fName = decode(paramInsertDocRq.getFilenm());
+			String tmpdir = System.getProperty("java.io.tmpdir");
+			fName = tmpdir + java.io.File.separator + fName;
+			if (!validateParameter(fName)) {
 				localInsertDocRs.setOperationStatCd("010");
 				localInsertDocRs.setErrStatDesc("PARAMETER_ERROR_CE Parameter Filenm can't be empty ");
 				return localInsertDocRs;
@@ -243,16 +254,18 @@ public class Util {
 				localInsertDocRs.setErrStatDesc("PARAMETER_ERROR_CE Parameter Properties can't be null or empty ");
 				return localInsertDocRs;
 			}
+			Base64 localBase64 = new Base64();
 			UtilFilenetP8 localObject1 = new UtilFilenetP8(localResourceBundle.getString("USERCONTENT"),
-					this.blowfish.decode(localResourceBundle.getString("PASSWORDCONTENT")),
+					// this.blowfish.decode(localResourceBundle.getString("PASSWORDCONTENT")),
+					decode(localBase64.decode(localResourceBundle.getString("PASSWORDCONTENT").getBytes())),
 					decode(paramInsertDocRq.getObjectStore()));
 			UtilFilenetP8.setFormatDate(ResourceBundle.getBundle("WcmApiConfig").getString("DATEFORMAT"));
 			UtilFilenetP8.setPatternDate(ResourceBundle.getBundle("WcmApiConfig").getString("DATEPATTERN"));
 			UtilFilenetP8.setTimeZone(ResourceBundle.getBundle("WcmApiConfig").getString("TIMEZONE"));
 			localObject1.setMultivalueSplit(ResourceBundle.getBundle("WcmApiConfig").getString("SPLITCHARACTER"));
 			byte[] arrayOfByte = paramInsertDocRq.getContent();
-			if (writeFile(arrayOfByte, decode(paramInsertDocRq.getFilenm()))) {
-				this.log.debug("Temp Document created: " + decode(paramInsertDocRq.getFilenm()));
+			if (writeFile(arrayOfByte, fName)) {
+				this.log.debug("Temp Document created: " + fName);
 				ArrayList localArrayList1 = new ArrayList();
 				ArrayList localArrayList2 = new ArrayList();
 				int i = 0;
@@ -266,10 +279,10 @@ public class Util {
 					String localObject3 = decode(((Metadata) localObject2).getKey());
 					String str2 = decode(((Metadata) localObject2).getValue());
 					if ((str2 != null) && (localObject3 != null) && (((String) localObject3).length() > 0)
-							&& (decode(paramInsertDocRq.getFilenm()) != null)) {
+							&& (fName != null)) {
 						if ((str2 != null) && (str2.length() == 0)
 								&& (((String) localObject3).equals("DocumentTitle"))) {
-							str2 = decode(paramInsertDocRq.getFilenm());
+							str2 = fName;
 						}
 						localArrayList1.add(localObject3);
 						localArrayList2.add(str2);
@@ -290,7 +303,7 @@ public class Util {
 				}
 				if (i == 0) {
 					localArrayList1.add("DocumentTitle");
-					localArrayList2.add(decode(paramInsertDocRq.getFilenm()));
+					localArrayList2.add(fName);
 				}
 				String str1 = decode(paramInsertDocRq.getDuplicate());
 				if ((str1 != null) && ((str1.equalsIgnoreCase("True")) || (str1.equalsIgnoreCase("False")))) {
@@ -301,10 +314,10 @@ public class Util {
 							.setErrStatDesc("PARAMETER_ERROR_CE Duplicate value only let the values True/False ");
 					return localInsertDocRs;
 				}
-				Object localObject2 = ((UtilFilenetP8) localObject1).createDocumentAndContent(
+				com.filenet.api.core.Document localObject2 = localObject1.createDocumentAndContent(
 						decode(paramInsertDocRq.getPath()), decode(paramInsertDocRq.getDocClass()),
 						(String[]) localArrayList1.toArray(new String[localArrayList1.size()]),
-						localArrayList2.toArray(), decode(paramInsertDocRq.getFilenm()));
+						localArrayList2.toArray(), fName);
 				Security[] localObject3 = paramInsertDocRq.getSecurityGrp();
 				if (localObject3 != null) {
 					for (int k = 0; k < localObject3.length; k++) {
@@ -323,10 +336,10 @@ public class Util {
 								&& (str5 != null) && (str5.length() > 0) && (str6 != null) && (str6.length() > 0)) {
 							this.log.debug("Adding security to Object");
 							try {
-								((UtilFilenetP8) localObject1).setPermissionsOnObject(1,
-										((Document) localObject2).getId(), str5, str4.toUpperCase(), str3,
-										str6.toUpperCase());
-								this.log.debug("security to Object Assigned");
+								// localObject1.setPermissionsOnObject(1, ((Document) localObject2).getId(),
+								// str5,
+								// str4.toUpperCase(), str3, str6.toUpperCase());
+								// this.log.debug("security to Object Assigned");
 							} catch (Exception localException2) {
 								((Document) localObject2).delete();
 								if ((localException2.getMessage() != null)
@@ -359,11 +372,11 @@ public class Util {
 						}
 					}
 				}
-				this.log.debug("Document on CE created: " + decode(paramInsertDocRq.getFilenm()));
-				new java.io.File(decode(paramInsertDocRq.getFilenm())).delete();
-				this.log.debug("Temp Document deleted: " + decode(paramInsertDocRq.getFilenm()));
-				this.log.debug("ID Document created: " + ((Document) localObject2).getId());
-				localInsertDocRs.setGUID(((Document) localObject2).getId().getBytes());
+				this.log.debug("Document on CE created: " + fName);
+				new java.io.File(fName).delete();
+				this.log.debug("Temp Document deleted: " + fName);
+				this.log.debug("ID Document created: " + localObject2.getProperties().getIdValue("Id"));
+				localInsertDocRs.setGUID(localObject2.getProperties().getIdValue("Id").getBytes());
 				localInsertDocRs.setOperationStatCd("000");
 			}
 		} catch (Exception localException1) {
@@ -373,7 +386,7 @@ public class Util {
 		}
 		return localInsertDocRs;
 	}
-*/
+
 	private boolean validateParameter(String paramString) {
 		return (paramString != null) && (paramString.length() > 0);
 	}
@@ -459,7 +472,8 @@ public class Util {
 
 	private boolean writeFile(byte[] paramArrayOfByte, String paramString) throws Exception {
 		java.io.File localFile = new java.io.File(paramString);
-		FileOutputStream localFileOutputStream = new FileOutputStream(localFile);
+		localFile.createNewFile();
+		FileOutputStream localFileOutputStream = new FileOutputStream(localFile, false);
 		for (int i = 0; i < paramArrayOfByte.length; i++) {
 			localFileOutputStream.write(paramArrayOfByte[i]);
 		}
@@ -467,7 +481,6 @@ public class Util {
 		return true;
 	}
 
-	/*
 	public final GetDocRs executeGetDocument(GetDocRq paramGetDocRq) {
 		this.log.debug("Start GetContent: ");
 		GetDocRs localGetDocRs = new GetDocRs();
@@ -501,29 +514,41 @@ public class Util {
 				localGetDocRs.setErrStatDesc("PARAMETER_ERROR_CE Parameter Password can't be empty ");
 				return localGetDocRs;
 			}
-			localObject = this.blowfish.decode((String) localObject);
+			// localObject = this.blowfish.decode((String) localObject);
 			this.log.debug(str1 + "--" + "--" + str2 + "--" + str3);
 			UtilFilenetP8 localUtilFilenetP8 = new UtilFilenetP8(str1, (String) localObject, str2);
-			
-			TransportInputStream localTransportInputStream = localUtilFilenetP8.getContent(str3);
-			InputStream localInputStream = localTransportInputStream.getContentStream();
-			long l = localTransportInputStream.getContentSize();
-			System.out.println(l);
-			byte[] arrayOfByte = new byte[(int) l];
-			int i = 0;
-			int j = 0;
-			while ((i < arrayOfByte.length)
-					&& ((j = localInputStream.read(arrayOfByte, i, arrayOfByte.length - i)) >= 0)) {
-				i += j;
+
+			ContentTransfer localTransportInputStream = localUtilFilenetP8.getContent(str3);
+			InputStream localInputStream = localTransportInputStream.accessContentStream();
+
+			String property = "java.io.tmpdir";
+
+			String tempDir = System.getProperty(property);
+			String fileName = tempDir + java.io.File.separator + localTransportInputStream.get_RetrievalName();
+			FileOutputStream fos = new FileOutputStream(
+					fileName);
+
+			try {
+				byte[] buffer = new byte[4096000];
+				int bytesRead = 0;
+				while ((bytesRead = localInputStream.read(buffer)) != -1) {
+					fos.write(buffer, 0, bytesRead);
+				}
+				System.out.println("done!");
+				fos.close();
+				localInputStream.close();
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
-			localTransportInputStream.getContentStream().close();
+			byte[] fileContent = Files.readAllBytes(new java.io.File(fileName).toPath());
+			localTransportInputStream.accessContentStream().close();
 			mx.com.metlife.filenet.cews.WSDLFile.File localFile = new mx.com.metlife.filenet.cews.WSDLFile.File();
-			localFile.setContent(arrayOfByte);
-			localFile.setFilenm(localTransportInputStream.getFilename().getBytes());
-			localFile.setMimeType(localTransportInputStream.getMimeType().getBytes());
+			localFile.setContent( fileContent);
+			localFile.setFilenm(localTransportInputStream.get_RetrievalName().getBytes());
+			localFile.setMimeType(localTransportInputStream.get_ContentType().getBytes());
 			localGetDocRs.setFile(localFile);
 			localGetDocRs.setOperationStatCd("000");
-			System.out.println(arrayOfByte);
+			// System.out.println(arrayOfByte);
 		} catch (Exception localException) {
 			Object localObject = evaluateException(localException);
 			localGetDocRs.setOperationStatCd(((ResponseError) localObject).getErrCd());
@@ -531,5 +556,5 @@ public class Util {
 		}
 		return localGetDocRs;
 	}
-	*/
+
 }
