@@ -56,6 +56,8 @@ import com.filenet.api.util.UserContext;
 import com.intent.admin.IUtils;
 import com.intent.admin.filenetp8.p8.SearchUtils;
 
+import mx.com.metlife.filenet.cews.WSDLFile.MetadataStr;
+
 public class UtilFilenetP8 implements IUtils {
 	ResourceBundle BUNDLE = ResourceBundle.getBundle("WcmApiConfig");
 
@@ -804,37 +806,30 @@ public class UtilFilenetP8 implements IUtils {
 		}
 		return stringDate;
 	}
+
 	/*
-     * Reads the content from a file and stores it
-     * in a byte array. The byte array will later be
-     * used to create ContentTransfer object.
-     */
-	public static byte[] readDocContentFromFile(File f)
-    {
-        FileInputStream is;
-        byte[] b = null;
-        int fileLength = (int)f.length();
-        if(fileLength != 0)
-        {
-        	try
-        	{
-        		is = new FileInputStream(f);
-        		b = new byte[fileLength];
-        		is.read(b);
-        		is.close();
-        	}
-        	catch (FileNotFoundException e)
-        	{
-        		e.printStackTrace();
-        	}
-        	catch (IOException e)
-        	{
-        		e.printStackTrace();
-        	}
-        }
-        return b;
-    }
-	
+	 * Reads the content from a file and stores it in a byte array. The byte array
+	 * will later be used to create ContentTransfer object.
+	 */
+	public static byte[] readDocContentFromFile(File f) {
+		FileInputStream is;
+		byte[] b = null;
+		int fileLength = (int) f.length();
+		if (fileLength != 0) {
+			try {
+				is = new FileInputStream(f);
+				b = new byte[fileLength];
+				is.read(b);
+				is.close();
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		return b;
+	}
+
 	public static ContentTransfer createContentTransfer(File f) {
 		ContentTransfer ctNew = null;
 		if (readDocContentFromFile(f) != null) {
@@ -896,11 +891,11 @@ public class UtilFilenetP8 implements IUtils {
 	}
 
 	private void setP8Properties(Document doc, String[] properties, Object[] values) throws Exception {
-		
-		PropertyFilter pf= new PropertyFilter();
-		   pf.addIncludeType(0, null, null, FilteredPropertyType.ANY,1);
-		   doc=Factory.Document.fetchInstance(fetchOS(), doc.getProperties().getIdValue("Id"), pf);
-		
+
+		PropertyFilter pf = new PropertyFilter();
+		pf.addIncludeType(0, null, null, FilteredPropertyType.ANY, 1);
+		doc = Factory.Document.fetchInstance(fetchOS(), doc.getProperties().getIdValue("Id"), pf);
+
 		// Fetch selected class description from the server
 		PropertyDescriptionList objPropDescs = doc.get_ClassDescription().get_PropertyDescriptions();
 		for (int i = 0; i < properties.length; i++) {
@@ -910,13 +905,13 @@ public class UtilFilenetP8 implements IUtils {
 				objPropDesc = (PropertyDescription) iter.next();
 				if (objPropDesc.get_SymbolicName().equalsIgnoreCase(properties[i])) {
 					if (objPropDesc.get_Cardinality().equals(Cardinality.LIST)) {
-						//Object[] obs = ((String) values[i]).split(this.multivalueSplit);
-						//Values vs = ObjectFactory.getValues();
-						//for (int j = 0; j < obs.length; j++) {
-						//	Value v = ObjectFactory.getValue();
-						//	setValueValueP8(v, obs[j]);
-						//	vs.add(v);
-						//}
+						// Object[] obs = ((String) values[i]).split(this.multivalueSplit);
+						// Values vs = ObjectFactory.getValues();
+						// for (int j = 0; j < obs.length; j++) {
+						// Value v = ObjectFactory.getValue();
+						// setValueValueP8(v, obs[j]);
+						// vs.add(v);
+						// }
 					} else if (objPropDesc.get_Cardinality().equals(Cardinality.SINGLE)) {
 						setValuePropertyP8(doc, objPropDesc, values[i]);
 					}
@@ -929,49 +924,65 @@ public class UtilFilenetP8 implements IUtils {
 	private void setValuePropertyP8(Document obj, PropertyDescription p, Object o) throws Exception {
 		PropertyDescription pdesc = p;
 
-		TypeID dataType= pdesc.get_DataType();
+		TypeID dataType = pdesc.get_DataType();
 		if (dataType.equals(TypeID.STRING)) {
-			obj.getProperties().putObjectValue(pdesc.get_SymbolicName(),(String) o);
+			obj.getProperties().putObjectValue(pdesc.get_SymbolicName(), (String) o);
 		} else if (dataType.equals(TypeID.LONG)) {
 			try {
-				obj.getProperties().putObjectValue(pdesc.get_SymbolicName(),Integer.parseInt(o.toString()));
+				obj.getProperties().putObjectValue(pdesc.get_SymbolicName(), Integer.parseInt(o.toString()));
 			} catch (Exception e) {
-				throw new Exception("PARAMETER_EXCEPTION Invalid Int Value over property " + pdesc.get_DisplayName() + " "
-						+ e.getMessage());
+				throw new Exception("PARAMETER_EXCEPTION Invalid Int Value over property " + pdesc.get_DisplayName()
+						+ " " + e.getMessage());
 			}
 		} else if (dataType.equals(TypeID.DOUBLE)) {
 			try {
-				obj.getProperties().putObjectValue(pdesc.get_SymbolicName(),Float.parseFloat(o.toString()));
+				obj.getProperties().putObjectValue(pdesc.get_SymbolicName(), Float.parseFloat(o.toString()));
 			} catch (Exception e) {
-				throw new Exception("PARAMETER_EXCEPTION Invalid Float Value over property " + pdesc.get_DisplayName() + " "
-						+ e.getMessage());
+				throw new Exception("PARAMETER_EXCEPTION Invalid Float Value over property " + pdesc.get_DisplayName()
+						+ " " + e.getMessage());
 			}
 		} else if (dataType.equals(TypeID.DATE)) {
 			if (o.getClass().getName().equals(class_String)) {
 				try {
 					formatDate.setLenient(false);
 					o = formatDate(o.toString());
-					obj.getProperties().putObjectValue(pdesc.get_SymbolicName(),formatDate.parse(o.toString()));
+					obj.getProperties().putObjectValue(pdesc.get_SymbolicName(), formatDate.parse(o.toString()));
 				} catch (ParseException e) {
-					throw new Exception("PARAMETER_EXCEPTION Invalid Date Value over property " + pdesc.get_DisplayName() + " "
-							+ e.getMessage());
+					throw new Exception("PARAMETER_EXCEPTION Invalid Date Value over property "
+							+ pdesc.get_DisplayName() + " " + e.getMessage());
 				}
 			} else if (o.getClass().getName().equals(class_Date)) {
-				obj.getProperties().putObjectValue(pdesc.get_SymbolicName(),(Date) o);
+				obj.getProperties().putObjectValue(pdesc.get_SymbolicName(), (Date) o);
 			}
 		} else if (dataType.equals(TypeID.BOOLEAN)) {
 			if ((o != null) && (("True".equalsIgnoreCase(o.toString())) || ("False".equalsIgnoreCase(o.toString())))) {
-				obj.getProperties().putObjectValue(pdesc.get_SymbolicName(),Boolean.valueOf(o.toString()));
+				obj.getProperties().putObjectValue(pdesc.get_SymbolicName(), Boolean.valueOf(o.toString()));
 			} else {
-				throw new Exception(
-						"PARAMETER_EXCEPTION Invalid Boolean Value over property " + pdesc.get_DisplayName() + " Value: " + o);
+				throw new Exception("PARAMETER_EXCEPTION Invalid Boolean Value over property " + pdesc.get_DisplayName()
+						+ " Value: " + o);
 			}
 		} else if (o.getClass().getName().equals("com.filenet.wcm.api.impl.ValuesImpl")) {
-			//obj.getProperties().putObjectValue(pdesc.get_SymbolicName(),(Values) o);
+			// obj.getProperties().putObjectValue(pdesc.get_SymbolicName(),(Values) o);
 		}
-		
-		log.debug("Saved prop..."+pdesc.get_SymbolicName()+" "+o);
+
+		log.debug("Saved prop..." + pdesc.get_SymbolicName() + " " + o);
 		obj.save(RefreshMode.REFRESH);
+	}
+
+	public void updatePropertiesValues(String idObject, MetadataStr[] propertiesStr) {
+		Document doc = Factory.Document.fetchInstance(fetchOS(), idObject, null);
+		String[] columns = new String[propertiesStr.length];
+		Object[] values = new Object[propertiesStr.length];
+		for (int i = 0; i < values.length; i++) {
+			columns[i] = propertiesStr[i].getKey();
+			values[i] = propertiesStr[i].getValue();
+		}
+
+		try {
+			setP8Properties(doc, columns, values);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 }

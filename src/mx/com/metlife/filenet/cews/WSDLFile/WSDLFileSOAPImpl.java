@@ -27,5 +27,9 @@ public class WSDLFileSOAPImpl implements mx.com.metlife.filenet.cews.WSDLFile.WS
 			mx.com.metlife.filenet.cews.WSDLFile.InsertDocRq parameters) throws java.rmi.RemoteException {
 		return new Util().executeInsert(parameters);
 	}
+
+	public mx.com.metlife.filenet.cews.WSDLFile.UpdateMetadataRs updateDocs(mx.com.metlife.filenet.cews.WSDLFile.UpdateMetadataRq parameters) throws java.rmi.RemoteException {
+		return new Util().executeUpdate(parameters);
+    }
 	
 }

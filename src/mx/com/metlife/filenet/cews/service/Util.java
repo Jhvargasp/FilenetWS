@@ -557,4 +557,109 @@ public class Util {
 		return localGetDocRs;
 	}
 
+	public UpdateMetadataRs executeUpdate(UpdateMetadataRq paramSearchDocRq) {
+		this.log.debug("Start query");
+		UpdateMetadataRs localSearchDocRs = new UpdateMetadataRs();
+		UpdateMetadataRsType metadataRsType=new UpdateMetadataRsType();
+		try {
+			this.log.debug("Validate User");
+			//String str1 = decode(paramSearchDocRq.getParameters().getUser());
+			String str1 = (paramSearchDocRq.getParameters().getUser());
+			if (!validateParameter(str1)) {
+				metadataRsType.setOperationStatCd("010");
+				metadataRsType.setErrStatDesc("PARAMETER_ERROR_CE Parameter User can't be empty ");
+				localSearchDocRs.setParameters(metadataRsType);
+				return localSearchDocRs;
+			}
+			this.log.debug("Validate Password");
+			//String localObject1 = decode(paramSearchDocRq.getPassword());
+			String localObject1 = (paramSearchDocRq.getParameters().getPassword());
+			if (!validateParameter((String) localObject1)) {
+				metadataRsType.setOperationStatCd("010");
+				metadataRsType.setErrStatDesc("PARAMETER_ERROR_CE Parameter Password can't be empty ");
+				localSearchDocRs.setParameters(metadataRsType);
+				return localSearchDocRs;
+			}
+			// localObject1 = this.blowfish.decode((String) localObject1);
+			this.log.debug("Validate ObjectStore");
+			//String str2 = decode(paramSearchDocRq.getObjectStore());
+			String str2 = (paramSearchDocRq.getParameters().getObjectStore());
+			if (!validateParameter(str2)) {
+				metadataRsType.setOperationStatCd("010");
+				metadataRsType.setErrStatDesc("PARAMETER_ERROR_CE Parameter ObjectStore can't be empty ");
+				localSearchDocRs.setParameters(metadataRsType);
+				return localSearchDocRs;
+			}
+			this.log.debug("Validate DocClass");
+			//String str3 = decode(paramSearchDocRq.getDocClass());
+			String str3 = (paramSearchDocRq.getParameters().getDocClass());
+			if (!validateParameter(str3)) {
+				metadataRsType.setOperationStatCd("010");
+				metadataRsType.setErrStatDesc("PARAMETER_ERROR_CE Parameter DocClass can't be empty ");
+				localSearchDocRs.setParameters(metadataRsType);
+				return localSearchDocRs;
+			}
+			String str4 = "";
+			this.log.debug("Validate Path");
+			if (paramSearchDocRq.getParameters().getPath() != null) {
+				//str4 = decode(paramSearchDocRq.getPath());
+				localSearchDocRs.setParameters(metadataRsType);
+			}
+			this.log.debug("Validate QueryCondition");
+			//String str5 = decode(paramSearchDocRq.getQueryCondition());
+			String str5 = (paramSearchDocRq.getParameters().getQueryCondition());
+			if (!validateParameter(str5)) {
+				metadataRsType.setOperationStatCd("010");
+				metadataRsType.setErrStatDesc("PARAMETER_ERROR_CE Parameter QueryCondition can't be empty ");
+				localSearchDocRs.setParameters(metadataRsType);
+				return localSearchDocRs;
+			}
+			if (str5.trim().length() == 0) {
+				str5 = "Id = Id ";
+			}
+			this.log.debug("Params");
+			this.log.debug(str1 + "--" + str2 + "--" + str3 + "--" + str4 + "--" + str5);
+			UtilFilenetP8 localUtilFilenetP8 = new UtilFilenetP8(str1, (String) localObject1, str2);
+			UtilFilenetP8.setFormatDate(ResourceBundle.getBundle("WcmApiConfig").getString("DATEFORMAT"));
+			UtilFilenetP8.setPatternDate(ResourceBundle.getBundle("WcmApiConfig").getString("DATEPATTERN"));
+			UtilFilenetP8.setTimeZone(ResourceBundle.getBundle("WcmApiConfig").getString("TIMEZONE"));
+			localUtilFilenetP8.setMultivalueSplit(ResourceBundle.getBundle("WcmApiConfig").getString("SPLITCHARACTER"));
+			HashMap localHashMap1 = localUtilFilenetP8.getPropertyDefinitionsByClass(str3);
+			List localList1 = getDateProperties(localHashMap1);
+			String str6 = "";
+			if ((str4 != null) && (str4.trim().length() > 0)) {
+				str6 = "  " + str3 + ".This INFOLDER '" + str4 + "' AND ";
+			}
+			String str7 = "SELECT Id FROM ";
+			str7 = str7 + str3 + " WHERE " + "VersionStatus" + "= 1 " + " AND " + str6 + parseCharacters(str5);
+			String where = "VersionStatus" + "= 1 " + " AND " + str6 + parseCharacters(str5);
+			this.log.debug("Query : " + str7);
+			List localList2 = localUtilFilenetP8.query("Id,DocumentTitle", str3, where);//
+			this.log.debug("Results : ".concat(String.valueOf(localList2.size())));
+			String[] arrayOfString = fixParams(localHashMap1).split(",");
+			Metadata[][] arrayOfMetadata = new Metadata[localList2.size()][];
+			int i = localList2.size();
+			for (int j = 0; j < i; j++) {
+				this.log.debug("Start update : ".concat(String.valueOf(localList2.size())));
+				HashMap localHashMap2 = (HashMap) localList2.get(j);
+				localUtilFilenetP8.updatePropertiesValues(localHashMap2.get("Id").toString(),paramSearchDocRq.getParameters().getPropertiesStr());
+				
+			}
+			metadataRsType.setErrStatDesc("");
+			metadataRsType.setOperationStatCd("000");			
+			
+			if (localList2.size() == 0) {
+				metadataRsType.setErrStatDesc("CONTENTENGINE_FILE_NOT_FOUND The query did not match any documents.");
+				metadataRsType.setOperationStatCd("005");
+			}
+		} catch (Exception localException1) {
+			Object localObject1 = evaluateException(localException1);
+			metadataRsType.setOperationStatCd(((ResponseError) localObject1).getErrCd());
+			metadataRsType.setErrStatDesc(((ResponseError) localObject1).getErrStat());
+		}
+		localSearchDocRs.setParameters(metadataRsType);
+		
+		return localSearchDocRs;
+	}
+
 }

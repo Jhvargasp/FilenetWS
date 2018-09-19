@@ -66,6 +66,18 @@ public class WSDLFileSOAPSkeleton implements mx.com.metlife.filenet.cews.WSDLFil
             _myOperations.put("insertDocument", new java.util.ArrayList());
         }
         ((java.util.List)_myOperations.get("insertDocument")).add(_oper);
+        _params = new org.apache.axis.description.ParameterDesc [] {
+            new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("http://cews.filenet.metlife.com.mx/WSDLFile/", "UpdateMetadataRq"), org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName("http://cews.filenet.metlife.com.mx/WSDLFile/", ">UpdateMetadataRq"), mx.com.metlife.filenet.cews.WSDLFile.UpdateMetadataRq.class, false, false), 
+        };
+        _oper = new org.apache.axis.description.OperationDesc("updateDocs", _params, new javax.xml.namespace.QName("http://cews.filenet.metlife.com.mx/WSDLFile/", "UpdateMetadataRs"));
+        _oper.setReturnType(new javax.xml.namespace.QName("http://cews.filenet.metlife.com.mx/WSDLFile/", ">UpdateMetadataRs"));
+        _oper.setElementQName(new javax.xml.namespace.QName("", "UpdateDocs"));
+        _oper.setSoapAction("http://cews.filenet.metlife.com.mx/WSDLFile/Operation3");
+        _myOperationsList.add(_oper);
+        if (_myOperations.get("updateDocs") == null) {
+            _myOperations.put("updateDocs", new java.util.ArrayList());
+        }
+        ((java.util.List)_myOperations.get("updateDocs")).add(_oper);
     }
 
     public WSDLFileSOAPSkeleton() {
@@ -90,6 +102,12 @@ public class WSDLFileSOAPSkeleton implements mx.com.metlife.filenet.cews.WSDLFil
     public mx.com.metlife.filenet.cews.WSDLFile.InsertDocRs insertDocument(mx.com.metlife.filenet.cews.WSDLFile.InsertDocRq parameters) throws java.rmi.RemoteException
     {
         mx.com.metlife.filenet.cews.WSDLFile.InsertDocRs ret = impl.insertDocument(parameters);
+        return ret;
+    }
+
+    public mx.com.metlife.filenet.cews.WSDLFile.UpdateMetadataRs updateDocs(mx.com.metlife.filenet.cews.WSDLFile.UpdateMetadataRq parameters) throws java.rmi.RemoteException
+    {
+        mx.com.metlife.filenet.cews.WSDLFile.UpdateMetadataRs ret = impl.updateDocs(parameters);
         return ret;
     }
 
