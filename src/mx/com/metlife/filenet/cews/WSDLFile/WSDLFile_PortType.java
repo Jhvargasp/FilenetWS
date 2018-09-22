@@ -12,4 +12,5 @@ public interface WSDLFile_PortType extends java.rmi.Remote {
     public mx.com.metlife.filenet.cews.WSDLFile.GetDocRs getDocument(mx.com.metlife.filenet.cews.WSDLFile.GetDocRq parameters) throws java.rmi.RemoteException;
     public mx.com.metlife.filenet.cews.WSDLFile.InsertDocRs insertDocument(mx.com.metlife.filenet.cews.WSDLFile.InsertDocRq parameters) throws java.rmi.RemoteException;
     public mx.com.metlife.filenet.cews.WSDLFile.UpdateMetadataRs updateDocs(mx.com.metlife.filenet.cews.WSDLFile.UpdateMetadataRq parameters) throws java.rmi.RemoteException;
+    public mx.com.metlife.filenet.cews.WSDLFile.InsertDocRs insertDocumentValida(mx.com.metlife.filenet.cews.WSDLFile.InsertDocValidaRq parameters) throws java.rmi.RemoteException;
 }

@@ -23,6 +23,7 @@ import javax.security.auth.Subject;
 import org.apache.log4j.Logger;
 
 import com.filenet.api.collection.ContentElementList;
+import com.filenet.api.collection.DocumentSet;
 import com.filenet.api.collection.ObjectStoreSet;
 import com.filenet.api.collection.PropertyDescriptionList;
 import com.filenet.api.collection.RepositoryRowSet;
@@ -983,6 +984,12 @@ public class UtilFilenetP8 implements IUtils {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	public Iterator<Document> getDocumentsInFolder(String folder) {
+		Folder f=Factory.Folder.fetchInstance(fetchOS(), folder, null);
+		DocumentSet set=f.get_ContainedDocuments();
+		return set.iterator();
 	}
 
 }

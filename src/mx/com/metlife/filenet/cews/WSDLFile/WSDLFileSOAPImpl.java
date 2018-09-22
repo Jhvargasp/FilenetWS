@@ -7,9 +7,6 @@
 
 package mx.com.metlife.filenet.cews.WSDLFile;
 
-import java.nio.charset.Charset;
-import java.util.Arrays;
-
 import mx.com.metlife.filenet.cews.service.Util;
 
 public class WSDLFileSOAPImpl implements mx.com.metlife.filenet.cews.WSDLFile.WSDLFile_PortType {
@@ -28,8 +25,14 @@ public class WSDLFileSOAPImpl implements mx.com.metlife.filenet.cews.WSDLFile.WS
 		return new Util().executeInsert(parameters);
 	}
 
-	public mx.com.metlife.filenet.cews.WSDLFile.UpdateMetadataRs updateDocs(mx.com.metlife.filenet.cews.WSDLFile.UpdateMetadataRq parameters) throws java.rmi.RemoteException {
+	public mx.com.metlife.filenet.cews.WSDLFile.UpdateMetadataRs updateDocs(
+			mx.com.metlife.filenet.cews.WSDLFile.UpdateMetadataRq parameters) throws java.rmi.RemoteException {
 		return new Util().executeUpdate(parameters);
-    }
-	
+	}
+
+	public mx.com.metlife.filenet.cews.WSDLFile.InsertDocRs insertDocumentValida(
+			mx.com.metlife.filenet.cews.WSDLFile.InsertDocValidaRq parameters) throws java.rmi.RemoteException {
+		return new Util().executeInsertValida(parameters);
+	}
+
 }
