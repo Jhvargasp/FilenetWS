@@ -1,0 +1,72 @@
+<!-- Use this file to deploy some handlers/chains and services      -->
+<!-- Two ways to do this:                                           -->
+<!--   java org.apache.axis.client.AdminClient deploy.wsdd          -->
+<!--      after the axis server is running                          -->
+<!-- or                                                             -->
+<!--   java org.apache.axis.utils.Admin client|server deploy.wsdd   -->
+<!--      from the same directory that the Axis engine runs         -->
+
+<deployment
+    xmlns="http://xml.apache.org/axis/wsdd/"
+    xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
+
+  <!-- Services from WSDLFileValida WSDL service -->
+
+  <service name="WSDLFile2SOAP" provider="java:RPC" style="document" use="literal">
+      <parameter name="wsdlTargetNamespace" value="http://cews.filenet.metlife.com.mx/WSDLFileValida/"/>
+      <parameter name="wsdlServiceElement" value="WSDLFileValida"/>
+      <parameter name="schemaUnqualified" value="http://cews.filenet.metlife.com.mx/WSDLFileValida/"/>
+      <parameter name="wsdlServicePort" value="WSDLFile2SOAP"/>
+      <parameter name="className" value="mx.com.metlife.filenet.cews.WSDLFileValida.WSDLFileValidaSOAPSkeleton"/>
+      <parameter name="wsdlPortType" value="WSDLFileValida"/>
+      <parameter name="typeMappingVersion" value="1.2"/>
+      <parameter name="allowedMethods" value="*"/>
+
+      <arrayMapping
+        xmlns:ns="http://cews.filenet.metlife.com.mx/WSDLFileValida/"
+        qname="ns:Document"
+        type="java:mx.com.metlife.filenet.cews.WSDLFileValida.Metadata[]"
+        innerType="cmp-ns:Metadata" xmlns:cmp-ns="http://cews.filenet.metlife.com.mx/WSDLFileValida/"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://cews.filenet.metlife.com.mx/WSDLFileValida/"
+        qname="ns:Security"
+        type="java:mx.com.metlife.filenet.cews.WSDLFileValida.Security"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <arrayMapping
+        xmlns:ns="http://cews.filenet.metlife.com.mx/WSDLFileValida/"
+        qname="ns:SecurityGroup"
+        type="java:mx.com.metlife.filenet.cews.WSDLFileValida.Security[]"
+        innerType="cmp-ns:Security" xmlns:cmp-ns="http://cews.filenet.metlife.com.mx/WSDLFileValida/"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://cews.filenet.metlife.com.mx/WSDLFileValida/"
+        qname="ns:Metadata"
+        type="java:mx.com.metlife.filenet.cews.WSDLFileValida.Metadata"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://cews.filenet.metlife.com.mx/WSDLFileValida/"
+        qname="ns:>InsertDocRs"
+        type="java:mx.com.metlife.filenet.cews.WSDLFileValida.InsertDocRs"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://cews.filenet.metlife.com.mx/WSDLFileValida/"
+        qname="ns:>InsertDocRq"
+        type="java:mx.com.metlife.filenet.cews.WSDLFileValida.InsertDocRq"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+  </service>
+</deployment>

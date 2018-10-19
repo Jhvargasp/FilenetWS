@@ -22,14 +22,6 @@
       <parameter name="typeMappingVersion" value="1.2"/>
       <parameter name="allowedMethods" value="*"/>
 
-      <typeMapping
-        xmlns:ns="http://cews.filenet.metlife.com.mx/WSDLFile/"
-        qname="ns:MetadataValida"
-        type="java:mx.com.metlife.filenet.cews.WSDLFile.MetadataValida"
-        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
-        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
-        encodingStyle=""
-      />
       <arrayMapping
         xmlns:ns="http://cews.filenet.metlife.com.mx/WSDLFile/"
         qname="ns:SecurityGroup"
@@ -149,14 +141,6 @@
       />
       <typeMapping
         xmlns:ns="http://cews.filenet.metlife.com.mx/WSDLFile/"
-        qname="ns:>InsertDocValidaRq"
-        type="java:mx.com.metlife.filenet.cews.WSDLFile.InsertDocValidaRq"
-        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
-        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
-        encodingStyle=""
-      />
-      <typeMapping
-        xmlns:ns="http://cews.filenet.metlife.com.mx/WSDLFile/"
         qname="ns:>InsertDocRs"
         type="java:mx.com.metlife.filenet.cews.WSDLFile.InsertDocRs"
         serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
@@ -192,13 +176,6 @@
         type="java:mx.com.metlife.filenet.cews.WSDLFile.UpdateMetadataRsType"
         serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
         deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
-        encodingStyle=""
-      />
-      <arrayMapping
-        xmlns:ns="http://cews.filenet.metlife.com.mx/WSDLFile/"
-        qname="ns:DocumentValida"
-        type="java:mx.com.metlife.filenet.cews.WSDLFile.MetadataValida[]"
-        innerType="cmp-ns:MetadataValida" xmlns:cmp-ns="http://cews.filenet.metlife.com.mx/WSDLFile/"
         encodingStyle=""
       />
       <arrayMapping

@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?><wsdl:definitions name="WSDLFile" targetNamespace="http://cews.filenet.metlife.com.mx/WSDLFileValida/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://cews.filenet.metlife.com.mx/WSDLFileValida/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://cews.filenet.metlife.com.mx/WSDLFileValida/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="WSDLFileValida" targetNamespace="http://cews.filenet.metlife.com.mx/WSDLFileValida/">
 	<wsdl:types>
 		<xsd:schema targetNamespace="http://cews.filenet.metlife.com.mx/WSDLFileValida/">
 			<xsd:complexType name="Metadata">
@@ -72,7 +73,7 @@
 		<wsdl:part element="tns:InsertDocRs" name="parameters">
 		</wsdl:part>
 	</wsdl:message>
-	<wsdl:portType name="WSDLFile">
+	<wsdl:portType name="WSDLFileValida">
 
 
 		<wsdl:operation name="insertDocumentValida">
@@ -80,7 +81,7 @@
 			<wsdl:output message="tns:insertDocumentValidaResponse"/>
 		</wsdl:operation>
 	</wsdl:portType>
-	<wsdl:binding name="WSDLFileValidaSOAP" type="tns:WSDLFile">
+	<wsdl:binding name="WSDLFileValidaSOAP" type="tns:WSDLFileValida">
 		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
 		<wsdl:operation name="insertDocumentValida">
 			<soap:operation soapAction="http://cews.filenet.metlife.com.mx/WSDLFileValida/Operation2"/>
@@ -92,9 +93,9 @@
 			</wsdl:output>
 		</wsdl:operation>
 	</wsdl:binding>
-	<wsdl:service name="WSDLFile">
-		<wsdl:port binding="tns:WSDLFileValidaSOAP" name="WSDLFileValidaSOAP">
-			<soap:address location="http://mlmformsp:9082/FileNetServiceDP/services/WSDLFileValidaSOAP"/>
+	<wsdl:service name="WSDLFileValida">
+		<wsdl:port binding="tns:WSDLFileValidaSOAP" name="WSDLFile2SOAP">
+			<soap:address location="http://localhost:8080/FilenetWS/services/WSDLFile2SOAP"/>
 		</wsdl:port>
 	</wsdl:service>
 </wsdl:definitions>

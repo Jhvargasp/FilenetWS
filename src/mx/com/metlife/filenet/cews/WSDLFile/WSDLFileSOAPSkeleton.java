@@ -78,18 +78,6 @@ public class WSDLFileSOAPSkeleton implements mx.com.metlife.filenet.cews.WSDLFil
             _myOperations.put("updateDocs", new java.util.ArrayList());
         }
         ((java.util.List)_myOperations.get("updateDocs")).add(_oper);
-        _params = new org.apache.axis.description.ParameterDesc [] {
-            new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("http://cews.filenet.metlife.com.mx/WSDLFile/", "InsertDocValidaRq"), org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName("http://cews.filenet.metlife.com.mx/WSDLFile/", ">InsertDocValidaRq"), mx.com.metlife.filenet.cews.WSDLFile.InsertDocValidaRq.class, false, false), 
-        };
-        _oper = new org.apache.axis.description.OperationDesc("insertDocumentValida", _params, new javax.xml.namespace.QName("http://cews.filenet.metlife.com.mx/WSDLFile/", "InsertDocRs"));
-        _oper.setReturnType(new javax.xml.namespace.QName("http://cews.filenet.metlife.com.mx/WSDLFile/", ">InsertDocRs"));
-        _oper.setElementQName(new javax.xml.namespace.QName("", "insertDocumentValida"));
-        _oper.setSoapAction("http://cews.filenet.metlife.com.mx/WSDLFile/Operation4");
-        _myOperationsList.add(_oper);
-        if (_myOperations.get("insertDocumentValida") == null) {
-            _myOperations.put("insertDocumentValida", new java.util.ArrayList());
-        }
-        ((java.util.List)_myOperations.get("insertDocumentValida")).add(_oper);
     }
 
     public WSDLFileSOAPSkeleton() {
@@ -120,12 +108,6 @@ public class WSDLFileSOAPSkeleton implements mx.com.metlife.filenet.cews.WSDLFil
     public mx.com.metlife.filenet.cews.WSDLFile.UpdateMetadataRs updateDocs(mx.com.metlife.filenet.cews.WSDLFile.UpdateMetadataRq parameters) throws java.rmi.RemoteException
     {
         mx.com.metlife.filenet.cews.WSDLFile.UpdateMetadataRs ret = impl.updateDocs(parameters);
-        return ret;
-    }
-
-    public mx.com.metlife.filenet.cews.WSDLFile.InsertDocRs insertDocumentValida(mx.com.metlife.filenet.cews.WSDLFile.InsertDocValidaRq parameters) throws java.rmi.RemoteException
-    {
-        mx.com.metlife.filenet.cews.WSDLFile.InsertDocRs ret = impl.insertDocumentValida(parameters);
         return ret;
     }
 

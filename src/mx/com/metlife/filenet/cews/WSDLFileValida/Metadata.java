@@ -1,23 +1,23 @@
 /**
- * MetadataValida.java
+ * Metadata.java
  *
  * This file was auto-generated from WSDL
  * by the Apache Axis 1.4 Apr 22, 2006 (06:55:48 PDT) WSDL2Java emitter.
  */
 
-package mx.com.metlife.filenet.cews.WSDLFile;
+package mx.com.metlife.filenet.cews.WSDLFileValida;
 
-public class MetadataValida  implements java.io.Serializable {
+public class Metadata  implements java.io.Serializable {
     private byte[] key;
 
     private byte[] value;
 
     private byte[] required;
 
-    public MetadataValida() {
+    public Metadata() {
     }
 
-    public MetadataValida(
+    public Metadata(
            byte[] key,
            byte[] value,
            byte[] required) {
@@ -28,7 +28,7 @@ public class MetadataValida  implements java.io.Serializable {
 
 
     /**
-     * Gets the key value for this MetadataValida.
+     * Gets the key value for this Metadata.
      * 
      * @return key
      */
@@ -38,7 +38,7 @@ public class MetadataValida  implements java.io.Serializable {
 
 
     /**
-     * Sets the key value for this MetadataValida.
+     * Sets the key value for this Metadata.
      * 
      * @param key
      */
@@ -48,7 +48,7 @@ public class MetadataValida  implements java.io.Serializable {
 
 
     /**
-     * Gets the value value for this MetadataValida.
+     * Gets the value value for this Metadata.
      * 
      * @return value
      */
@@ -58,7 +58,7 @@ public class MetadataValida  implements java.io.Serializable {
 
 
     /**
-     * Sets the value value for this MetadataValida.
+     * Sets the value value for this Metadata.
      * 
      * @param value
      */
@@ -68,7 +68,7 @@ public class MetadataValida  implements java.io.Serializable {
 
 
     /**
-     * Gets the required value for this MetadataValida.
+     * Gets the required value for this Metadata.
      * 
      * @return required
      */
@@ -78,7 +78,7 @@ public class MetadataValida  implements java.io.Serializable {
 
 
     /**
-     * Sets the required value for this MetadataValida.
+     * Sets the required value for this Metadata.
      * 
      * @param required
      */
@@ -88,8 +88,8 @@ public class MetadataValida  implements java.io.Serializable {
 
     private java.lang.Object __equalsCalc = null;
     public synchronized boolean equals(java.lang.Object obj) {
-        if (!(obj instanceof MetadataValida)) return false;
-        MetadataValida other = (MetadataValida) obj;
+        if (!(obj instanceof Metadata)) return false;
+        Metadata other = (Metadata) obj;
         if (obj == null) return false;
         if (this == obj) return true;
         if (__equalsCalc != null) {
@@ -157,10 +157,10 @@ public class MetadataValida  implements java.io.Serializable {
 
     // Type metadata
     private static org.apache.axis.description.TypeDesc typeDesc =
-        new org.apache.axis.description.TypeDesc(MetadataValida.class, true);
+        new org.apache.axis.description.TypeDesc(Metadata.class, true);
 
     static {
-        typeDesc.setXmlType(new javax.xml.namespace.QName("http://cews.filenet.metlife.com.mx/WSDLFile/", "MetadataValida"));
+        typeDesc.setXmlType(new javax.xml.namespace.QName("http://cews.filenet.metlife.com.mx/WSDLFileValida/", "Metadata"));
         org.apache.axis.description.ElementDesc elemField = new org.apache.axis.description.ElementDesc();
         elemField.setFieldName("key");
         elemField.setXmlName(new javax.xml.namespace.QName("", "Key"));

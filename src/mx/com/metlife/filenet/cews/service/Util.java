@@ -28,11 +28,15 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Set;
+
+import javax.xml.bind.DatatypeConverter;
+
 import mx.com.metlife.encrypt.Blowfish;
 import mx.com.metlife.filenet.cews.WSDLFile.*;
 import mx.com.metlife.filenet.utils.MetaData;
 import mx.com.metlife.filenet.utils.MetaDataList;
 
+import org.apache.commons.codec.EncoderException;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.log4j.Logger;
 
@@ -59,7 +63,7 @@ public class Util {
 				localSearchDocRs.setErrStatDesc("PARAMETER_ERROR_CE Parameter Password can't be empty ");
 				return localSearchDocRs;
 			}
-			// localObject1 = this.blowfish.decode((String) localObject1);
+			//localObject1 = this.blowfish.decodeBytes(paramSearchDocRq.getPassword());
 			this.log.debug("Validate ObjectStore");
 			String str2 = decode(paramSearchDocRq.getObjectStore());
 			if (!validateParameter(str2)) {
@@ -109,13 +113,13 @@ public class Util {
 			List localList2 = localUtilFilenetP8.query(fixParams(localHashMap1), str3, where);
 			this.log.debug("Results : ".concat(String.valueOf(localList2.size())));
 			String[] arrayOfString = fixParams(localHashMap1).split(",");
-			Metadata[][] arrayOfMetadata = new Metadata[localList2.size()][];
+			mx.com.metlife.filenet.cews.WSDLFile.Document[] arrayOfMetadata = new mx.com.metlife.filenet.cews.WSDLFile.Document[localList2.size()];
 			int i = localList2.size();
 			for (int j = 0; j < i; j++) {
 				HashMap localHashMap2 = (HashMap) localList2.get(j);
-				Metadata[] arrayOfMetadata1 = new Metadata[arrayOfString.length];
+				mx.com.metlife.filenet.cews.WSDLFile.Metadata[] arrayOfMetadata1 = new mx.com.metlife.filenet.cews.WSDLFile.Metadata[arrayOfString.length];
 				for (int k = 0; k < arrayOfString.length; k++) {
-					Metadata localMetadata = new Metadata();
+					mx.com.metlife.filenet.cews.WSDLFile.Metadata localMetadata = new mx.com.metlife.filenet.cews.WSDLFile.Metadata();
 					Object localObject2 = localHashMap2.get(arrayOfString[k]);
 					if (localList1.contains(arrayOfString[k])) {
 						try {
@@ -135,7 +139,7 @@ public class Util {
 					}
 					arrayOfMetadata1[k] = localMetadata;
 				}
-				arrayOfMetadata[j] = arrayOfMetadata1;
+				arrayOfMetadata[j] =new mx.com.metlife.filenet.cews.WSDLFile.Document( arrayOfMetadata1);
 			}
 			localSearchDocRs.setDocuments(arrayOfMetadata);
 			localSearchDocRs.setErrStatDesc("");
@@ -196,6 +200,8 @@ public class Util {
 	public final InsertDocRs executeInsert(InsertDocRq paramInsertDocRq) {
 		this.log.debug("Start insert: ");
 		InsertDocRs localInsertDocRs = new InsertDocRs();
+		Base64 localBase64 = new Base64();
+		
 		try {
 			ResourceBundle localResourceBundle = ResourceBundle.getBundle("WcmApiConfig");
 			this.log.debug("Validate USERCONTENT");
@@ -205,10 +211,8 @@ public class Util {
 				return localInsertDocRs;
 			}
 			this.log.debug("Validate PASSWORDCONTENT");
-			// if
-			// (!validateParameter(this.blowfish.decode(localResourceBundle.getString("PASSWORDCONTENT"))))
-			// {
-			if (!validateParameter((localResourceBundle.getString("PASSWORDCONTENT")))) {
+			if (!validateParameter(this.blowfish.decode(localResourceBundle.getString("PASSWORDCONTENT")))) {
+				// if (!validateParameter((localResourceBundle.getString("PASSWORDCONTENT")))) {
 				localInsertDocRs.setOperationStatCd("010");
 				localInsertDocRs.setErrStatDesc("PARAMETER_ERROR_CE Parameter Password can't be empty ");
 				return localInsertDocRs;
@@ -259,10 +263,9 @@ public class Util {
 				localInsertDocRs.setErrStatDesc("PARAMETER_ERROR_CE Parameter Properties can't be null or empty ");
 				return localInsertDocRs;
 			}
-			Base64 localBase64 = new Base64();
 			UtilFilenetP8 localObject1 = new UtilFilenetP8(localResourceBundle.getString("USERCONTENT"),
-					// this.blowfish.decode(localResourceBundle.getString("PASSWORDCONTENT")),
-					decode(localBase64.decode(localResourceBundle.getString("PASSWORDCONTENT").getBytes())),
+					 this.blowfish.decode(localResourceBundle.getString("PASSWORDCONTENT")),
+					//decode(localBase64.decode(localResourceBundle.getString("PASSWORDCONTENT").getBytes())),
 					decode(paramInsertDocRq.getObjectStore()));
 			UtilFilenetP8.setFormatDate(ResourceBundle.getBundle("WcmApiConfig").getString("DATEFORMAT"));
 			UtilFilenetP8.setPatternDate(ResourceBundle.getBundle("WcmApiConfig").getString("DATEPATTERN"));
@@ -275,14 +278,14 @@ public class Util {
 				ArrayList localArrayList2 = new ArrayList();
 				int i = 0;
 				for (int j = 0; j < paramInsertDocRq.getProperties().length; j++) {
-					Metadata localObject2 = paramInsertDocRq.getProperties()[j];
+					mx.com.metlife.filenet.cews.WSDLFile.Metadata localObject2 = paramInsertDocRq.getProperties()[j];
 					if (localObject2 == null) {
 						localInsertDocRs.setOperationStatCd("010");
 						localInsertDocRs.setErrStatDesc("PARAMETER_ERROR_CE Metadata Tag must have parameters");
 						return localInsertDocRs;
 					}
-					String localObject3 = decode(((Metadata) localObject2).getKey());
-					String str2 = decode(((Metadata) localObject2).getValue());
+					String localObject3 = decode(((mx.com.metlife.filenet.cews.WSDLFile.Metadata) localObject2).getKey());
+					String str2 = decode(((mx.com.metlife.filenet.cews.WSDLFile.Metadata) localObject2).getValue());
 
 					if ((str2 != null) && (localObject3 != null) && (((String) localObject3).length() > 0)
 							&& (fName != null)) {
@@ -383,7 +386,7 @@ public class Util {
 				new java.io.File(fName).delete();
 				this.log.debug("Temp Document deleted: " + fName);
 				this.log.debug("ID Document created: " + localObject2.getProperties().getIdValue("Id"));
-				localInsertDocRs.setGUID(localObject2.getProperties().getIdValue("Id").getBytes());
+				localInsertDocRs.setGUID(localObject2.getProperties().getIdValue("Id").toString().getBytes());
 				localInsertDocRs.setOperationStatCd("000");
 			}
 		} catch (Exception localException1) {
@@ -470,6 +473,7 @@ public class Util {
 
 			String tempDir = System.getProperty(property);
 			String fileName = tempDir + java.io.File.separator + localTransportInputStream.get_RetrievalName();
+
 			FileOutputStream fos = new FileOutputStream(fileName);
 
 			try {
@@ -524,7 +528,7 @@ public class Util {
 				localSearchDocRs.setParameters(metadataRsType);
 				return localSearchDocRs;
 			}
-			// localObject1 = this.blowfish.decode((String) localObject1);
+			localObject1 = this.blowfish.decode((String) localObject1);
 			this.log.debug("Validate ObjectStore");
 			// String str2 = decode(paramSearchDocRq.getObjectStore());
 			String str2 = (paramSearchDocRq.getParameters().getObjectStore());
@@ -581,7 +585,7 @@ public class Util {
 			List localList2 = localUtilFilenetP8.query("Id,DocumentTitle", str3, where);//
 			this.log.debug("Results : ".concat(String.valueOf(localList2.size())));
 			String[] arrayOfString = fixParams(localHashMap1).split(",");
-			Metadata[][] arrayOfMetadata = new Metadata[localList2.size()][];
+			Document[][] arrayOfMetadata = new Document[localList2.size()][];
 			int i = localList2.size();
 			for (int j = 0; j < i; j++) {
 				this.log.debug("Start update : ".concat(String.valueOf(localList2.size())));
@@ -607,9 +611,10 @@ public class Util {
 		return localSearchDocRs;
 	}
 
-	public InsertDocRs executeInsertValida(InsertDocValidaRq paramInsertDocRq) {
+	public mx.com.metlife.filenet.cews.WSDLFileValida.InsertDocRs executeInsertValida(
+			mx.com.metlife.filenet.cews.WSDLFileValida.InsertDocRq paramInsertDocRq) {
 		this.log.debug("Start insert: ");
-		InsertDocRs localInsertDocRs = new InsertDocRs();
+		mx.com.metlife.filenet.cews.WSDLFileValida.InsertDocRs localInsertDocRs = new mx.com.metlife.filenet.cews.WSDLFileValida.InsertDocRs();
 		try {
 			ResourceBundle localResourceBundle = ResourceBundle.getBundle("WcmApiConfig");
 			this.log.debug("Validate USERCONTENT");
@@ -619,10 +624,8 @@ public class Util {
 				return localInsertDocRs;
 			}
 			this.log.debug("Validate PASSWORDCONTENT");
-			// if
-			// (!validateParameter(this.blowfish.decode(localResourceBundle.getString("PASSWORDCONTENT"))))
-			// {
-			if (!validateParameter((localResourceBundle.getString("PASSWORDCONTENT")))) {
+			if (!validateParameter(this.blowfish.decode(localResourceBundle.getString("PASSWORDCONTENT")))) {
+				// if (!validateParameter((localResourceBundle.getString("PASSWORDCONTENT")))) {
 				localInsertDocRs.setOperationStatCd("010");
 				localInsertDocRs.setErrStatDesc("PARAMETER_ERROR_CE Parameter Password can't be empty ");
 				return localInsertDocRs;
@@ -631,12 +634,6 @@ public class Util {
 			if (!validateParameter(decode(paramInsertDocRq.getObjectStore()))) {
 				localInsertDocRs.setOperationStatCd("010");
 				localInsertDocRs.setErrStatDesc("PARAMETER_ERROR_CE Parameter ObjectStore can't be empty ");
-				return localInsertDocRs;
-			}
-			this.log.debug("Validate Duplicate");
-			if (!validateParameter(decode(paramInsertDocRq.getDuplicate()))) {
-				localInsertDocRs.setOperationStatCd("010");
-				localInsertDocRs.setErrStatDesc("PARAMETER_ERROR_CE Parameter Duplicate can't be empty ");
 				return localInsertDocRs;
 			}
 			this.log.debug("Validate Path");
@@ -690,15 +687,16 @@ public class Util {
 				ArrayList localArrayList2 = new ArrayList();
 				int i = 0;
 				for (int j = 0; j < paramInsertDocRq.getProperties().length; j++) {
-					MetadataValida localObject2 = paramInsertDocRq.getProperties()[j];
+					mx.com.metlife.filenet.cews.WSDLFileValida.Metadata localObject2 = paramInsertDocRq
+							.getProperties()[j];
 					if (localObject2 == null) {
 						localInsertDocRs.setOperationStatCd("010");
 						localInsertDocRs.setErrStatDesc("PARAMETER_ERROR_CE Metadata Tag must have parameters");
 						return localInsertDocRs;
 					}
-					String localObject3 = decode(((MetadataValida) localObject2).getKey());
-					String str2 = decode(((MetadataValida) localObject2).getValue());
-					String str6 = decode(((MetadataValida) localObject2).getRequired());
+					String localObject3 = decode(localObject2.getKey());
+					String str2 = decode(localObject2.getValue());
+					String str6 = decode(localObject2.getRequired());
 
 					localMetaDataList.add(
 							new MetaData((String) localObject3, (String) str2, Boolean.valueOf(str6).booleanValue()));
@@ -731,7 +729,7 @@ public class Util {
 					localArrayList2.add(fName);
 					localMetaDataList.add(new MetaData("DocumentTitle", fName, false));
 				}
-				String str1 = decode(paramInsertDocRq.getDuplicate());
+				String str1 = "False";
 				if ((str1 != null) && ((str1.equalsIgnoreCase("True")) || (str1.equalsIgnoreCase("False")))) {
 					localObject1.setUniquenessConstraint(Boolean.valueOf(str1).booleanValue());
 				} else {
@@ -753,7 +751,7 @@ public class Util {
 						decode(paramInsertDocRq.getPath()), docClass,
 						(String[]) localArrayList1.toArray(new String[localArrayList1.size()]),
 						localArrayList2.toArray(), fName);
-				Security[] localObject3 = paramInsertDocRq.getSecurityGrp();
+				mx.com.metlife.filenet.cews.WSDLFileValida.Security[] localObject3 = paramInsertDocRq.getSecurityGrp();
 				if (localObject3 != null) {
 					for (int k = 0; k < localObject3.length; k++) {
 						if (localObject3[k] == null) {
@@ -940,5 +938,22 @@ public class Util {
 		}
 		this.log.debug("No need to check for properties because all input properties are Required=False");
 		return false;
+	}
+	
+	public static void main(String []args) {
+		try {
+			String s = "{72AE07C4-1466-45A0-9747-F762B6B23770}";
+			byte[] b = s.getBytes();
+			byte[] bytesEncoded = Base64.encodeBase64(s.getBytes());
+			System.out.println("encoded value is " + new String(new String(bytesEncoded).getBytes()));
+
+			// Decode data on other side, by processing encoded data
+			byte[] valueDecoded = Base64.decodeBase64(bytesEncoded);
+			System.out.println("Decoded value is " + new String(valueDecoded));
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

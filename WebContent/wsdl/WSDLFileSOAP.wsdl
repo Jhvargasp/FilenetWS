@@ -29,13 +29,6 @@
 					<xsd:element maxOccurs="1" minOccurs="1" name="Value" nillable="false" type="xsd:base64Binary"/>
 				</xsd:sequence>
 			</xsd:complexType>
-			<xsd:complexType name="MetadataValida">
-				<xsd:sequence>
-					<xsd:element maxOccurs="1" minOccurs="1" name="Key" nillable="false" type="xsd:base64Binary"/>
-					<xsd:element maxOccurs="1" minOccurs="1" name="Value" nillable="false" type="xsd:base64Binary"/>
-					<xsd:element maxOccurs="1" minOccurs="1" name="Required" nillable="false" type="xsd:base64Binary"/>
-				</xsd:sequence>
-			</xsd:complexType>
 			<xsd:complexType name="File">
 				<xsd:sequence>
 					<xsd:element maxOccurs="1" minOccurs="1" name="MimeType" type="xsd:base64Binary"/>
@@ -51,11 +44,6 @@
 			<xsd:complexType name="Document">
 				<xsd:sequence>
 					<xsd:element maxOccurs="unbounded" minOccurs="0" name="Metadata" type="tns:Metadata"/>
-				</xsd:sequence>
-			</xsd:complexType>
-			<xsd:complexType name="DocumentValida">
-				<xsd:sequence>
-					<xsd:element maxOccurs="unbounded" minOccurs="0" name="MetadataValida" type="tns:MetadataValida"/>
 				</xsd:sequence>
 			</xsd:complexType>
 			<xsd:complexType name="SecurityGroup">
@@ -80,20 +68,6 @@
 						<xsd:element maxOccurs="1" minOccurs="1" name="Duplicate" type="xsd:base64Binary"/>
 						<xsd:element maxOccurs="1" minOccurs="0" name="SecurityGrp" type="tns:SecurityGroup"/>
 						<xsd:element maxOccurs="1" minOccurs="1" name="Properties" type="tns:Document"/>
-						<xsd:element maxOccurs="1" minOccurs="1" name="Filenm" type="xsd:base64Binary"/>
-						<xsd:element maxOccurs="1" minOccurs="1" name="Content" type="xsd:base64Binary"/>
-					</xsd:sequence>
-				</xsd:complexType>
-			</xsd:element>
-			<xsd:element name="InsertDocValidaRq">
-				<xsd:complexType>
-					<xsd:sequence>
-						<xsd:element maxOccurs="1" minOccurs="1" name="ObjectStore" type="xsd:base64Binary"/>
-						<xsd:element maxOccurs="1" minOccurs="1" name="DocClass" type="xsd:base64Binary"/>
-						<xsd:element maxOccurs="1" minOccurs="1" name="Path" type="xsd:base64Binary"/>
-						<xsd:element maxOccurs="1" minOccurs="1" name="Duplicate" type="xsd:base64Binary"/>
-						<xsd:element maxOccurs="1" minOccurs="0" name="SecurityGrp" type="tns:SecurityGroup"/>
-						<xsd:element maxOccurs="1" minOccurs="1" name="Properties" type="tns:DocumentValida"/>
 						<xsd:element maxOccurs="1" minOccurs="1" name="Filenm" type="xsd:base64Binary"/>
 						<xsd:element maxOccurs="1" minOccurs="1" name="Content" type="xsd:base64Binary"/>
 					</xsd:sequence>
@@ -141,6 +115,7 @@
 					</xsd:sequence>
 				</xsd:complexType>
 			</xsd:element>
+			
 			<xsd:complexType name="UpdateMetadataRqType">
 				<xsd:sequence>
 					<xsd:element maxOccurs="1" minOccurs="1" name="ObjectStore" type="xsd:string">
@@ -242,13 +217,7 @@
 	<wsdl:message name="UpdateDocsRequest">
 		<wsdl:part element="tns:UpdateMetadataRq" name="parameters"/>
 	</wsdl:message>
-	<wsdl:message name="insertDocumentValidaRequest">
-		<wsdl:part element="tns:InsertDocValidaRq" name="parameters"/>
-	</wsdl:message>
-	<wsdl:message name="insertDocumentValidaResponse">
-		<wsdl:part element="tns:InsertDocRs" name="parameters">
-		</wsdl:part>
-	</wsdl:message>
+	
 	<wsdl:portType name="WSDLFile">
 		<wsdl:operation name="searchDocuments">
 			<wsdl:input message="tns:searchDocumentsRequest"/>
@@ -265,10 +234,6 @@
 		<wsdl:operation name="UpdateDocs">
 			<wsdl:input message="tns:UpdateDocsRequest"/>
 			<wsdl:output message="tns:UpdateDocsResponse"/>
-		</wsdl:operation>
-		<wsdl:operation name="insertDocumentValida">
-			<wsdl:input message="tns:insertDocumentValidaRequest"/>
-			<wsdl:output message="tns:insertDocumentValidaResponse"/>
 		</wsdl:operation>
 	</wsdl:portType>
 	<wsdl:binding name="WSDLFileSOAP" type="tns:WSDLFile">
@@ -302,15 +267,6 @@
 		</wsdl:operation>
 		<wsdl:operation name="UpdateDocs">
 			<soap:operation soapAction="http://cews.filenet.metlife.com.mx/WSDLFile/Operation3"/>
-			<wsdl:input>
-				<soap:body use="literal"/>
-			</wsdl:input>
-			<wsdl:output>
-				<soap:body use="literal"/>
-			</wsdl:output>
-		</wsdl:operation>
-		<wsdl:operation name="insertDocumentValida">
-			<soap:operation soapAction="http://cews.filenet.metlife.com.mx/WSDLFile/Operation4"/>
 			<wsdl:input>
 				<soap:body use="literal"/>
 			</wsdl:input>

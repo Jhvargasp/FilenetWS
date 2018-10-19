@@ -16,7 +16,7 @@ public class WSDLFileSOAPStub extends org.apache.axis.client.Stub implements mx.
     static org.apache.axis.description.OperationDesc [] _operations;
 
     static {
-        _operations = new org.apache.axis.description.OperationDesc[5];
+        _operations = new org.apache.axis.description.OperationDesc[4];
         _initOperationDesc1();
     }
 
@@ -66,17 +66,6 @@ public class WSDLFileSOAPStub extends org.apache.axis.client.Stub implements mx.
         oper.setStyle(org.apache.axis.constants.Style.DOCUMENT);
         oper.setUse(org.apache.axis.constants.Use.LITERAL);
         _operations[3] = oper;
-
-        oper = new org.apache.axis.description.OperationDesc();
-        oper.setName("insertDocumentValida");
-        param = new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("http://cews.filenet.metlife.com.mx/WSDLFile/", "InsertDocValidaRq"), org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName("http://cews.filenet.metlife.com.mx/WSDLFile/", ">InsertDocValidaRq"), mx.com.metlife.filenet.cews.WSDLFile.InsertDocValidaRq.class, false, false);
-        oper.addParameter(param);
-        oper.setReturnType(new javax.xml.namespace.QName("http://cews.filenet.metlife.com.mx/WSDLFile/", ">InsertDocRs"));
-        oper.setReturnClass(mx.com.metlife.filenet.cews.WSDLFile.InsertDocRs.class);
-        oper.setReturnQName(new javax.xml.namespace.QName("http://cews.filenet.metlife.com.mx/WSDLFile/", "InsertDocRs"));
-        oper.setStyle(org.apache.axis.constants.Style.DOCUMENT);
-        oper.setUse(org.apache.axis.constants.Use.LITERAL);
-        _operations[4] = oper;
 
     }
 
@@ -137,13 +126,6 @@ public class WSDLFileSOAPStub extends org.apache.axis.client.Stub implements mx.
             cachedSerFactories.add(beansf);
             cachedDeserFactories.add(beandf);
 
-            qName = new javax.xml.namespace.QName("http://cews.filenet.metlife.com.mx/WSDLFile/", ">InsertDocValidaRq");
-            cachedSerQNames.add(qName);
-            cls = mx.com.metlife.filenet.cews.WSDLFile.InsertDocValidaRq.class;
-            cachedSerClasses.add(cls);
-            cachedSerFactories.add(beansf);
-            cachedDeserFactories.add(beandf);
-
             qName = new javax.xml.namespace.QName("http://cews.filenet.metlife.com.mx/WSDLFile/", ">SearchDocRq");
             cachedSerQNames.add(qName);
             cls = mx.com.metlife.filenet.cews.WSDLFile.SearchDocRq.class;
@@ -190,7 +172,7 @@ public class WSDLFileSOAPStub extends org.apache.axis.client.Stub implements mx.
             cachedSerQNames.add(qName);
             cls = mx.com.metlife.filenet.cews.WSDLFile.Metadata[].class;
             cachedSerClasses.add(cls);
-            qName = new javax.xml.namespace.QName("http://cews.filenet.metlife.com.mx/WSDLFile/", "Metadata");
+            qName = new javax.xml.namespace.QName("http://cews.filenet.metlife.com.mx/WSDLFile/", "Document");
             qName2 = new javax.xml.namespace.QName("", "Metadata");
             cachedSerFactories.add(new org.apache.axis.encoding.ser.ArraySerializerFactory(qName, qName2));
             cachedDeserFactories.add(new org.apache.axis.encoding.ser.ArrayDeserializerFactory());
@@ -201,15 +183,6 @@ public class WSDLFileSOAPStub extends org.apache.axis.client.Stub implements mx.
             cachedSerClasses.add(cls);
             qName = new javax.xml.namespace.QName("http://cews.filenet.metlife.com.mx/WSDLFile/", "Document");
             qName2 = new javax.xml.namespace.QName("", "Document");
-            cachedSerFactories.add(new org.apache.axis.encoding.ser.ArraySerializerFactory(qName, qName2));
-            cachedDeserFactories.add(new org.apache.axis.encoding.ser.ArrayDeserializerFactory());
-
-            qName = new javax.xml.namespace.QName("http://cews.filenet.metlife.com.mx/WSDLFile/", "DocumentValida");
-            cachedSerQNames.add(qName);
-            cls = mx.com.metlife.filenet.cews.WSDLFile.MetadataValida[].class;
-            cachedSerClasses.add(cls);
-            qName = new javax.xml.namespace.QName("http://cews.filenet.metlife.com.mx/WSDLFile/", "MetadataValida");
-            qName2 = new javax.xml.namespace.QName("", "MetadataValida");
             cachedSerFactories.add(new org.apache.axis.encoding.ser.ArraySerializerFactory(qName, qName2));
             cachedDeserFactories.add(new org.apache.axis.encoding.ser.ArrayDeserializerFactory());
 
@@ -229,7 +202,7 @@ public class WSDLFileSOAPStub extends org.apache.axis.client.Stub implements mx.
             cachedSerFactories.add(new org.apache.axis.encoding.ser.ArraySerializerFactory(qName, qName2));
             cachedDeserFactories.add(new org.apache.axis.encoding.ser.ArrayDeserializerFactory());
 
-            qName = new javax.xml.namespace.QName("http://cews.filenet.metlife.com.mx/WSDLFile/", "Metadata");
+            qName = new javax.xml.namespace.QName("http://cews.filenet.metlife.com.mx/WSDLFile/", "Document");
             cachedSerQNames.add(qName);
             cls = mx.com.metlife.filenet.cews.WSDLFile.Metadata.class;
             cachedSerClasses.add(cls);
@@ -239,13 +212,6 @@ public class WSDLFileSOAPStub extends org.apache.axis.client.Stub implements mx.
             qName = new javax.xml.namespace.QName("http://cews.filenet.metlife.com.mx/WSDLFile/", "MetadataStr");
             cachedSerQNames.add(qName);
             cls = mx.com.metlife.filenet.cews.WSDLFile.MetadataStr.class;
-            cachedSerClasses.add(cls);
-            cachedSerFactories.add(beansf);
-            cachedDeserFactories.add(beandf);
-
-            qName = new javax.xml.namespace.QName("http://cews.filenet.metlife.com.mx/WSDLFile/", "MetadataValida");
-            cachedSerQNames.add(qName);
-            cls = mx.com.metlife.filenet.cews.WSDLFile.MetadataValida.class;
             cachedSerClasses.add(cls);
             cachedSerFactories.add(beansf);
             cachedDeserFactories.add(beandf);
@@ -484,40 +450,6 @@ public class WSDLFileSOAPStub extends org.apache.axis.client.Stub implements mx.
                 return (mx.com.metlife.filenet.cews.WSDLFile.UpdateMetadataRs) _resp;
             } catch (java.lang.Exception _exception) {
                 return (mx.com.metlife.filenet.cews.WSDLFile.UpdateMetadataRs) org.apache.axis.utils.JavaUtils.convert(_resp, mx.com.metlife.filenet.cews.WSDLFile.UpdateMetadataRs.class);
-            }
-        }
-  } catch (org.apache.axis.AxisFault axisFaultException) {
-  throw axisFaultException;
-}
-    }
-
-    public mx.com.metlife.filenet.cews.WSDLFile.InsertDocRs insertDocumentValida(mx.com.metlife.filenet.cews.WSDLFile.InsertDocValidaRq parameters) throws java.rmi.RemoteException {
-        if (super.cachedEndpoint == null) {
-            throw new org.apache.axis.NoEndPointException();
-        }
-        org.apache.axis.client.Call _call = createCall();
-        _call.setOperation(_operations[4]);
-        _call.setUseSOAPAction(true);
-        _call.setSOAPActionURI("http://cews.filenet.metlife.com.mx/WSDLFile/Operation4");
-        _call.setEncodingStyle(null);
-        _call.setProperty(org.apache.axis.client.Call.SEND_TYPE_ATTR, Boolean.FALSE);
-        _call.setProperty(org.apache.axis.AxisEngine.PROP_DOMULTIREFS, Boolean.FALSE);
-        _call.setSOAPVersion(org.apache.axis.soap.SOAPConstants.SOAP11_CONSTANTS);
-        _call.setOperationName(new javax.xml.namespace.QName("", "insertDocumentValida"));
-
-        setRequestHeaders(_call);
-        setAttachments(_call);
- try {        java.lang.Object _resp = _call.invoke(new java.lang.Object[] {parameters});
-
-        if (_resp instanceof java.rmi.RemoteException) {
-            throw (java.rmi.RemoteException)_resp;
-        }
-        else {
-            extractAttachments(_call);
-            try {
-                return (mx.com.metlife.filenet.cews.WSDLFile.InsertDocRs) _resp;
-            } catch (java.lang.Exception _exception) {
-                return (mx.com.metlife.filenet.cews.WSDLFile.InsertDocRs) org.apache.axis.utils.JavaUtils.convert(_resp, mx.com.metlife.filenet.cews.WSDLFile.InsertDocRs.class);
             }
         }
   } catch (org.apache.axis.AxisFault axisFaultException) {

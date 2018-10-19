@@ -1,34 +1,34 @@
 /**
- * SearchDocRs.java
+ * InsertDocRs.java
  *
  * This file was auto-generated from WSDL
  * by the Apache Axis 1.4 Apr 22, 2006 (06:55:48 PDT) WSDL2Java emitter.
  */
 
-package mx.com.metlife.filenet.cews.WSDLFile;
+package mx.com.metlife.filenet.cews.WSDLFileValida;
 
-public class SearchDocRs  implements java.io.Serializable {
+public class InsertDocRs  implements java.io.Serializable {
     private java.lang.String operationStatCd;
 
     private java.lang.String errStatDesc;
 
-    private mx.com.metlife.filenet.cews.WSDLFile.Document[] documents;
+    private byte[] GUID;
 
-    public SearchDocRs() {
+    public InsertDocRs() {
     }
 
-    public SearchDocRs(
+    public InsertDocRs(
            java.lang.String operationStatCd,
            java.lang.String errStatDesc,
-           mx.com.metlife.filenet.cews.WSDLFile.Document[] documents) {
+           byte[] GUID) {
            this.operationStatCd = operationStatCd;
            this.errStatDesc = errStatDesc;
-           this.documents = documents;
+           this.GUID = GUID;
     }
 
 
     /**
-     * Gets the operationStatCd value for this SearchDocRs.
+     * Gets the operationStatCd value for this InsertDocRs.
      * 
      * @return operationStatCd
      */
@@ -38,7 +38,7 @@ public class SearchDocRs  implements java.io.Serializable {
 
 
     /**
-     * Sets the operationStatCd value for this SearchDocRs.
+     * Sets the operationStatCd value for this InsertDocRs.
      * 
      * @param operationStatCd
      */
@@ -48,7 +48,7 @@ public class SearchDocRs  implements java.io.Serializable {
 
 
     /**
-     * Gets the errStatDesc value for this SearchDocRs.
+     * Gets the errStatDesc value for this InsertDocRs.
      * 
      * @return errStatDesc
      */
@@ -58,7 +58,7 @@ public class SearchDocRs  implements java.io.Serializable {
 
 
     /**
-     * Sets the errStatDesc value for this SearchDocRs.
+     * Sets the errStatDesc value for this InsertDocRs.
      * 
      * @param errStatDesc
      */
@@ -68,28 +68,28 @@ public class SearchDocRs  implements java.io.Serializable {
 
 
     /**
-     * Gets the documents value for this SearchDocRs.
+     * Gets the GUID value for this InsertDocRs.
      * 
-     * @return documents
+     * @return GUID
      */
-    public mx.com.metlife.filenet.cews.WSDLFile.Document[] getDocuments() {
-        return documents;
+    public byte[] getGUID() {
+        return GUID;
     }
 
 
     /**
-     * Sets the documents value for this SearchDocRs.
+     * Sets the GUID value for this InsertDocRs.
      * 
-     * @param documents
+     * @param GUID
      */
-    public void setDocuments(mx.com.metlife.filenet.cews.WSDLFile.Document[] documents) {
-        this.documents = documents;
+    public void setGUID(byte[] GUID) {
+        this.GUID = GUID;
     }
 
     private java.lang.Object __equalsCalc = null;
     public synchronized boolean equals(java.lang.Object obj) {
-        if (!(obj instanceof SearchDocRs)) return false;
-        SearchDocRs other = (SearchDocRs) obj;
+        if (!(obj instanceof InsertDocRs)) return false;
+        InsertDocRs other = (InsertDocRs) obj;
         if (obj == null) return false;
         if (this == obj) return true;
         if (__equalsCalc != null) {
@@ -104,9 +104,9 @@ public class SearchDocRs  implements java.io.Serializable {
             ((this.errStatDesc==null && other.getErrStatDesc()==null) || 
              (this.errStatDesc!=null &&
               this.errStatDesc.equals(other.getErrStatDesc()))) &&
-            ((this.documents==null && other.getDocuments()==null) || 
-             (this.documents!=null &&
-              java.util.Arrays.equals(this.documents, other.getDocuments())));
+            ((this.GUID==null && other.getGUID()==null) || 
+             (this.GUID!=null &&
+              java.util.Arrays.equals(this.GUID, other.getGUID())));
         __equalsCalc = null;
         return _equals;
     }
@@ -124,11 +124,11 @@ public class SearchDocRs  implements java.io.Serializable {
         if (getErrStatDesc() != null) {
             _hashCode += getErrStatDesc().hashCode();
         }
-        if (getDocuments() != null) {
+        if (getGUID() != null) {
             for (int i=0;
-                 i<java.lang.reflect.Array.getLength(getDocuments());
+                 i<java.lang.reflect.Array.getLength(getGUID());
                  i++) {
-                java.lang.Object obj = java.lang.reflect.Array.get(getDocuments(), i);
+                java.lang.Object obj = java.lang.reflect.Array.get(getGUID(), i);
                 if (obj != null &&
                     !obj.getClass().isArray()) {
                     _hashCode += obj.hashCode();
@@ -141,10 +141,10 @@ public class SearchDocRs  implements java.io.Serializable {
 
     // Type metadata
     private static org.apache.axis.description.TypeDesc typeDesc =
-        new org.apache.axis.description.TypeDesc(SearchDocRs.class, true);
+        new org.apache.axis.description.TypeDesc(InsertDocRs.class, true);
 
     static {
-        typeDesc.setXmlType(new javax.xml.namespace.QName("http://cews.filenet.metlife.com.mx/WSDLFile/", ">SearchDocRs"));
+        typeDesc.setXmlType(new javax.xml.namespace.QName("http://cews.filenet.metlife.com.mx/WSDLFileValida/", ">InsertDocRs"));
         org.apache.axis.description.ElementDesc elemField = new org.apache.axis.description.ElementDesc();
         elemField.setFieldName("operationStatCd");
         elemField.setXmlName(new javax.xml.namespace.QName("", "OperationStatCd"));
@@ -159,12 +159,11 @@ public class SearchDocRs  implements java.io.Serializable {
         elemField.setNillable(false);
         typeDesc.addFieldDesc(elemField);
         elemField = new org.apache.axis.description.ElementDesc();
-        elemField.setFieldName("documents");
-        elemField.setXmlName(new javax.xml.namespace.QName("", "Documents"));
-        elemField.setXmlType(new javax.xml.namespace.QName("http://cews.filenet.metlife.com.mx/WSDLFile/", "Document"));
+        elemField.setFieldName("GUID");
+        elemField.setXmlName(new javax.xml.namespace.QName("", "GUID"));
+        elemField.setXmlType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "base64Binary"));
         elemField.setMinOccurs(0);
         elemField.setNillable(false);
-        //elemField.setItemQName(new javax.xml.namespace.QName("", "Document"));
         typeDesc.addFieldDesc(elemField);
     }
 

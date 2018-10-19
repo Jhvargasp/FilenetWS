@@ -1,45 +1,41 @@
 /**
- * InsertDocValidaRq.java
+ * InsertDocRq.java
  *
  * This file was auto-generated from WSDL
  * by the Apache Axis 1.4 Apr 22, 2006 (06:55:48 PDT) WSDL2Java emitter.
  */
 
-package mx.com.metlife.filenet.cews.WSDLFile;
+package mx.com.metlife.filenet.cews.WSDLFileValida;
 
-public class InsertDocValidaRq  implements java.io.Serializable {
+public class InsertDocRq  implements java.io.Serializable {
     private byte[] objectStore;
 
     private byte[] docClass;
 
     private byte[] path;
 
-    private byte[] duplicate;
+    private mx.com.metlife.filenet.cews.WSDLFileValida.Security[] securityGrp;
 
-    private mx.com.metlife.filenet.cews.WSDLFile.Security[] securityGrp;
-
-    private mx.com.metlife.filenet.cews.WSDLFile.MetadataValida[] properties;
+    private mx.com.metlife.filenet.cews.WSDLFileValida.Metadata[] properties;
 
     private byte[] filenm;
 
     private byte[] content;
 
-    public InsertDocValidaRq() {
+    public InsertDocRq() {
     }
 
-    public InsertDocValidaRq(
+    public InsertDocRq(
            byte[] objectStore,
            byte[] docClass,
            byte[] path,
-           byte[] duplicate,
-           mx.com.metlife.filenet.cews.WSDLFile.Security[] securityGrp,
-           mx.com.metlife.filenet.cews.WSDLFile.MetadataValida[] properties,
+           mx.com.metlife.filenet.cews.WSDLFileValida.Security[] securityGrp,
+           mx.com.metlife.filenet.cews.WSDLFileValida.Metadata[] properties,
            byte[] filenm,
            byte[] content) {
            this.objectStore = objectStore;
            this.docClass = docClass;
            this.path = path;
-           this.duplicate = duplicate;
            this.securityGrp = securityGrp;
            this.properties = properties;
            this.filenm = filenm;
@@ -48,7 +44,7 @@ public class InsertDocValidaRq  implements java.io.Serializable {
 
 
     /**
-     * Gets the objectStore value for this InsertDocValidaRq.
+     * Gets the objectStore value for this InsertDocRq.
      * 
      * @return objectStore
      */
@@ -58,7 +54,7 @@ public class InsertDocValidaRq  implements java.io.Serializable {
 
 
     /**
-     * Sets the objectStore value for this InsertDocValidaRq.
+     * Sets the objectStore value for this InsertDocRq.
      * 
      * @param objectStore
      */
@@ -68,7 +64,7 @@ public class InsertDocValidaRq  implements java.io.Serializable {
 
 
     /**
-     * Gets the docClass value for this InsertDocValidaRq.
+     * Gets the docClass value for this InsertDocRq.
      * 
      * @return docClass
      */
@@ -78,7 +74,7 @@ public class InsertDocValidaRq  implements java.io.Serializable {
 
 
     /**
-     * Sets the docClass value for this InsertDocValidaRq.
+     * Sets the docClass value for this InsertDocRq.
      * 
      * @param docClass
      */
@@ -88,7 +84,7 @@ public class InsertDocValidaRq  implements java.io.Serializable {
 
 
     /**
-     * Gets the path value for this InsertDocValidaRq.
+     * Gets the path value for this InsertDocRq.
      * 
      * @return path
      */
@@ -98,7 +94,7 @@ public class InsertDocValidaRq  implements java.io.Serializable {
 
 
     /**
-     * Sets the path value for this InsertDocValidaRq.
+     * Sets the path value for this InsertDocRq.
      * 
      * @param path
      */
@@ -108,67 +104,47 @@ public class InsertDocValidaRq  implements java.io.Serializable {
 
 
     /**
-     * Gets the duplicate value for this InsertDocValidaRq.
-     * 
-     * @return duplicate
-     */
-    public byte[] getDuplicate() {
-        return duplicate;
-    }
-
-
-    /**
-     * Sets the duplicate value for this InsertDocValidaRq.
-     * 
-     * @param duplicate
-     */
-    public void setDuplicate(byte[] duplicate) {
-        this.duplicate = duplicate;
-    }
-
-
-    /**
-     * Gets the securityGrp value for this InsertDocValidaRq.
+     * Gets the securityGrp value for this InsertDocRq.
      * 
      * @return securityGrp
      */
-    public mx.com.metlife.filenet.cews.WSDLFile.Security[] getSecurityGrp() {
+    public mx.com.metlife.filenet.cews.WSDLFileValida.Security[] getSecurityGrp() {
         return securityGrp;
     }
 
 
     /**
-     * Sets the securityGrp value for this InsertDocValidaRq.
+     * Sets the securityGrp value for this InsertDocRq.
      * 
      * @param securityGrp
      */
-    public void setSecurityGrp(mx.com.metlife.filenet.cews.WSDLFile.Security[] securityGrp) {
+    public void setSecurityGrp(mx.com.metlife.filenet.cews.WSDLFileValida.Security[] securityGrp) {
         this.securityGrp = securityGrp;
     }
 
 
     /**
-     * Gets the properties value for this InsertDocValidaRq.
+     * Gets the properties value for this InsertDocRq.
      * 
      * @return properties
      */
-    public mx.com.metlife.filenet.cews.WSDLFile.MetadataValida[] getProperties() {
+    public mx.com.metlife.filenet.cews.WSDLFileValida.Metadata[] getProperties() {
         return properties;
     }
 
 
     /**
-     * Sets the properties value for this InsertDocValidaRq.
+     * Sets the properties value for this InsertDocRq.
      * 
      * @param properties
      */
-    public void setProperties(mx.com.metlife.filenet.cews.WSDLFile.MetadataValida[] properties) {
+    public void setProperties(mx.com.metlife.filenet.cews.WSDLFileValida.Metadata[] properties) {
         this.properties = properties;
     }
 
 
     /**
-     * Gets the filenm value for this InsertDocValidaRq.
+     * Gets the filenm value for this InsertDocRq.
      * 
      * @return filenm
      */
@@ -178,7 +154,7 @@ public class InsertDocValidaRq  implements java.io.Serializable {
 
 
     /**
-     * Sets the filenm value for this InsertDocValidaRq.
+     * Sets the filenm value for this InsertDocRq.
      * 
      * @param filenm
      */
@@ -188,7 +164,7 @@ public class InsertDocValidaRq  implements java.io.Serializable {
 
 
     /**
-     * Gets the content value for this InsertDocValidaRq.
+     * Gets the content value for this InsertDocRq.
      * 
      * @return content
      */
@@ -198,7 +174,7 @@ public class InsertDocValidaRq  implements java.io.Serializable {
 
 
     /**
-     * Sets the content value for this InsertDocValidaRq.
+     * Sets the content value for this InsertDocRq.
      * 
      * @param content
      */
@@ -208,8 +184,8 @@ public class InsertDocValidaRq  implements java.io.Serializable {
 
     private java.lang.Object __equalsCalc = null;
     public synchronized boolean equals(java.lang.Object obj) {
-        if (!(obj instanceof InsertDocValidaRq)) return false;
-        InsertDocValidaRq other = (InsertDocValidaRq) obj;
+        if (!(obj instanceof InsertDocRq)) return false;
+        InsertDocRq other = (InsertDocRq) obj;
         if (obj == null) return false;
         if (this == obj) return true;
         if (__equalsCalc != null) {
@@ -227,9 +203,6 @@ public class InsertDocValidaRq  implements java.io.Serializable {
             ((this.path==null && other.getPath()==null) || 
              (this.path!=null &&
               java.util.Arrays.equals(this.path, other.getPath()))) &&
-            ((this.duplicate==null && other.getDuplicate()==null) || 
-             (this.duplicate!=null &&
-              java.util.Arrays.equals(this.duplicate, other.getDuplicate()))) &&
             ((this.securityGrp==null && other.getSecurityGrp()==null) || 
              (this.securityGrp!=null &&
               java.util.Arrays.equals(this.securityGrp, other.getSecurityGrp()))) &&
@@ -286,17 +259,6 @@ public class InsertDocValidaRq  implements java.io.Serializable {
                 }
             }
         }
-        if (getDuplicate() != null) {
-            for (int i=0;
-                 i<java.lang.reflect.Array.getLength(getDuplicate());
-                 i++) {
-                java.lang.Object obj = java.lang.reflect.Array.get(getDuplicate(), i);
-                if (obj != null &&
-                    !obj.getClass().isArray()) {
-                    _hashCode += obj.hashCode();
-                }
-            }
-        }
         if (getSecurityGrp() != null) {
             for (int i=0;
                  i<java.lang.reflect.Array.getLength(getSecurityGrp());
@@ -347,10 +309,10 @@ public class InsertDocValidaRq  implements java.io.Serializable {
 
     // Type metadata
     private static org.apache.axis.description.TypeDesc typeDesc =
-        new org.apache.axis.description.TypeDesc(InsertDocValidaRq.class, true);
+        new org.apache.axis.description.TypeDesc(InsertDocRq.class, true);
 
     static {
-        typeDesc.setXmlType(new javax.xml.namespace.QName("http://cews.filenet.metlife.com.mx/WSDLFile/", ">InsertDocValidaRq"));
+        typeDesc.setXmlType(new javax.xml.namespace.QName("http://cews.filenet.metlife.com.mx/WSDLFileValida/", ">InsertDocRq"));
         org.apache.axis.description.ElementDesc elemField = new org.apache.axis.description.ElementDesc();
         elemField.setFieldName("objectStore");
         elemField.setXmlName(new javax.xml.namespace.QName("", "ObjectStore"));
@@ -370,15 +332,9 @@ public class InsertDocValidaRq  implements java.io.Serializable {
         elemField.setNillable(false);
         typeDesc.addFieldDesc(elemField);
         elemField = new org.apache.axis.description.ElementDesc();
-        elemField.setFieldName("duplicate");
-        elemField.setXmlName(new javax.xml.namespace.QName("", "Duplicate"));
-        elemField.setXmlType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "base64Binary"));
-        elemField.setNillable(false);
-        typeDesc.addFieldDesc(elemField);
-        elemField = new org.apache.axis.description.ElementDesc();
         elemField.setFieldName("securityGrp");
         elemField.setXmlName(new javax.xml.namespace.QName("", "SecurityGrp"));
-        elemField.setXmlType(new javax.xml.namespace.QName("http://cews.filenet.metlife.com.mx/WSDLFile/", "Security"));
+        elemField.setXmlType(new javax.xml.namespace.QName("http://cews.filenet.metlife.com.mx/WSDLFileValida/", "Security"));
         elemField.setMinOccurs(0);
         elemField.setNillable(false);
         elemField.setItemQName(new javax.xml.namespace.QName("", "Security"));
@@ -386,9 +342,9 @@ public class InsertDocValidaRq  implements java.io.Serializable {
         elemField = new org.apache.axis.description.ElementDesc();
         elemField.setFieldName("properties");
         elemField.setXmlName(new javax.xml.namespace.QName("", "Properties"));
-        elemField.setXmlType(new javax.xml.namespace.QName("http://cews.filenet.metlife.com.mx/WSDLFile/", "MetadataValida"));
+        elemField.setXmlType(new javax.xml.namespace.QName("http://cews.filenet.metlife.com.mx/WSDLFileValida/", "Metadata"));
         elemField.setNillable(false);
-        elemField.setItemQName(new javax.xml.namespace.QName("", "MetadataValida"));
+        elemField.setItemQName(new javax.xml.namespace.QName("", "Metadata"));
         typeDesc.addFieldDesc(elemField);
         elemField = new org.apache.axis.description.ElementDesc();
         elemField.setFieldName("filenm");
