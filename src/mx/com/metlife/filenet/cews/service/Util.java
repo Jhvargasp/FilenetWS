@@ -382,8 +382,8 @@ public class Util {
 				this.log.debug("Document on CE created: " + fName);
 				new java.io.File(fName).delete();
 				this.log.debug("Temp Document deleted: " + fName);
-				this.log.debug("ID Document created: " + localObject2.getProperties().getIdValue("Id"));
-				localInsertDocRs.setGUID(localObject2.getProperties().getIdValue("Id").getBytes());
+				this.log.debug("ID Document created: " + localObject2.getProperties().getIdValue("Id"));				
+				localInsertDocRs.setGUID(localBase64.encode(localObject2.getProperties().getIdValue("Id").toString().getBytes()));
 				localInsertDocRs.setOperationStatCd("000");
 			}
 		} catch (Exception localException1) {
