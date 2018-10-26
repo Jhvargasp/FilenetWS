@@ -8,7 +8,7 @@ import org.apache.log4j.Logger;
 public class Blowfish
 {
   private Logger log = Logger.getLogger(getClass());
-  String llave = "";
+  public String llave = "";
   
   public String encode(String paramString)
     throws Exception

@@ -37,13 +37,14 @@ import org.apache.commons.codec.binary.Base64;
 import org.apache.log4j.Logger;
 
 public class Util {
+	private static final ResourceBundle BUNDLE = ResourceBundle.getBundle("WcmApiConfig");
 	private final Blowfish blowfish = new Blowfish();
 	private final Logger log = Logger.getLogger(getClass());
 	private String validation_msg = "";
-
 	public final SearchDocRs executeSearch(SearchDocRq paramSearchDocRq) {
 		this.log.debug("Start query");
 		SearchDocRs localSearchDocRs = new SearchDocRs();
+		blowfish.llave=BUNDLE.getString("KEY");
 		try {
 			this.log.debug("Validate User");
 			String str1 = decode(paramSearchDocRq.getUser());
@@ -54,12 +55,13 @@ public class Util {
 			}
 			this.log.debug("Validate Password");
 			String localObject1 = decode(paramSearchDocRq.getPassword());
+			
 			if (!validateParameter((String) localObject1)) {
 				localSearchDocRs.setOperationStatCd("010");
 				localSearchDocRs.setErrStatDesc("PARAMETER_ERROR_CE Parameter Password can't be empty ");
 				return localSearchDocRs;
 			}
-			// localObject1 = this.blowfish.decode((String) localObject1);
+			localObject1 = this.blowfish.decode((String) localObject1);
 			this.log.debug("Validate ObjectStore");
 			String str2 = decode(paramSearchDocRq.getObjectStore());
 			if (!validateParameter(str2)) {
@@ -92,10 +94,10 @@ public class Util {
 			this.log.debug("Params");
 			this.log.debug(str1 + "--" + str2 + "--" + str3 + "--" + str4 + "--" + str5);
 			UtilFilenetP8 localUtilFilenetP8 = new UtilFilenetP8(str1, (String) localObject1, str2);
-			UtilFilenetP8.setFormatDate(ResourceBundle.getBundle("WcmApiConfig").getString("DATEFORMAT"));
-			UtilFilenetP8.setPatternDate(ResourceBundle.getBundle("WcmApiConfig").getString("DATEPATTERN"));
-			UtilFilenetP8.setTimeZone(ResourceBundle.getBundle("WcmApiConfig").getString("TIMEZONE"));
-			localUtilFilenetP8.setMultivalueSplit(ResourceBundle.getBundle("WcmApiConfig").getString("SPLITCHARACTER"));
+			UtilFilenetP8.setFormatDate(BUNDLE.getString("DATEFORMAT"));
+			UtilFilenetP8.setPatternDate(BUNDLE.getString("DATEPATTERN"));
+			UtilFilenetP8.setTimeZone(BUNDLE.getString("TIMEZONE"));
+			localUtilFilenetP8.setMultivalueSplit(BUNDLE.getString("SPLITCHARACTER"));
 			HashMap localHashMap1 = localUtilFilenetP8.getPropertyDefinitionsByClass(str3);
 			List localList1 = getDateProperties(localHashMap1);
 			String str6 = "";
@@ -197,7 +199,7 @@ public class Util {
 		this.log.debug("Start insert: ");
 		InsertDocRs localInsertDocRs = new InsertDocRs();
 		try {
-			ResourceBundle localResourceBundle = ResourceBundle.getBundle("WcmApiConfig");
+			ResourceBundle localResourceBundle = BUNDLE;
 			this.log.debug("Validate USERCONTENT");
 			if (!validateParameter(localResourceBundle.getString("USERCONTENT"))) {
 				localInsertDocRs.setOperationStatCd("010");
@@ -264,10 +266,10 @@ public class Util {
 					// this.blowfish.decode(localResourceBundle.getString("PASSWORDCONTENT")),
 					decode(localBase64.decode(localResourceBundle.getString("PASSWORDCONTENT").getBytes())),
 					decode(paramInsertDocRq.getObjectStore()));
-			UtilFilenetP8.setFormatDate(ResourceBundle.getBundle("WcmApiConfig").getString("DATEFORMAT"));
-			UtilFilenetP8.setPatternDate(ResourceBundle.getBundle("WcmApiConfig").getString("DATEPATTERN"));
-			UtilFilenetP8.setTimeZone(ResourceBundle.getBundle("WcmApiConfig").getString("TIMEZONE"));
-			localObject1.setMultivalueSplit(ResourceBundle.getBundle("WcmApiConfig").getString("SPLITCHARACTER"));
+			UtilFilenetP8.setFormatDate(BUNDLE.getString("DATEFORMAT"));
+			UtilFilenetP8.setPatternDate(BUNDLE.getString("DATEPATTERN"));
+			UtilFilenetP8.setTimeZone(BUNDLE.getString("TIMEZONE"));
+			localObject1.setMultivalueSplit(BUNDLE.getString("SPLITCHARACTER"));
 			byte[] arrayOfByte = paramInsertDocRq.getContent();
 			if (writeFile(arrayOfByte, fName)) {
 				this.log.debug("Temp Document created: " + fName);
@@ -429,6 +431,7 @@ public class Util {
 	public final GetDocRs executeGetDocument(GetDocRq paramGetDocRq) {
 		this.log.debug("Start GetContent: ");
 		GetDocRs localGetDocRs = new GetDocRs();
+		blowfish.llave=BUNDLE.getString("KEY");
 		try {
 			String str1 = decode(paramGetDocRq.getUser());
 			String localObject = decode(paramGetDocRq.getPassword());
@@ -459,7 +462,8 @@ public class Util {
 				localGetDocRs.setErrStatDesc("PARAMETER_ERROR_CE Parameter Password can't be empty ");
 				return localGetDocRs;
 			}
-			// localObject = this.blowfish.decode((String) localObject);
+			localObject = this.blowfish.decode((String) localObject);
+			
 			this.log.debug(str1 + "--" + "--" + str2 + "--" + str3);
 			UtilFilenetP8 localUtilFilenetP8 = new UtilFilenetP8(str1, (String) localObject, str2);
 
@@ -564,10 +568,10 @@ public class Util {
 			this.log.debug("Params");
 			this.log.debug(str1 + "--" + str2 + "--" + str3 + "--" + str4 + "--" + str5);
 			UtilFilenetP8 localUtilFilenetP8 = new UtilFilenetP8(str1, (String) localObject1, str2);
-			UtilFilenetP8.setFormatDate(ResourceBundle.getBundle("WcmApiConfig").getString("DATEFORMAT"));
-			UtilFilenetP8.setPatternDate(ResourceBundle.getBundle("WcmApiConfig").getString("DATEPATTERN"));
-			UtilFilenetP8.setTimeZone(ResourceBundle.getBundle("WcmApiConfig").getString("TIMEZONE"));
-			localUtilFilenetP8.setMultivalueSplit(ResourceBundle.getBundle("WcmApiConfig").getString("SPLITCHARACTER"));
+			UtilFilenetP8.setFormatDate(BUNDLE.getString("DATEFORMAT"));
+			UtilFilenetP8.setPatternDate(BUNDLE.getString("DATEPATTERN"));
+			UtilFilenetP8.setTimeZone(BUNDLE.getString("TIMEZONE"));
+			localUtilFilenetP8.setMultivalueSplit(BUNDLE.getString("SPLITCHARACTER"));
 			HashMap localHashMap1 = localUtilFilenetP8.getPropertyDefinitionsByClass(str3);
 			List localList1 = getDateProperties(localHashMap1);
 			String str6 = "";
@@ -611,7 +615,7 @@ public class Util {
 		this.log.debug("Start insert: ");
 		InsertDocRs localInsertDocRs = new InsertDocRs();
 		try {
-			ResourceBundle localResourceBundle = ResourceBundle.getBundle("WcmApiConfig");
+			ResourceBundle localResourceBundle = BUNDLE;
 			this.log.debug("Validate USERCONTENT");
 			if (!validateParameter(localResourceBundle.getString("USERCONTENT"))) {
 				localInsertDocRs.setOperationStatCd("010");
@@ -678,10 +682,10 @@ public class Util {
 					// this.blowfish.decode(localResourceBundle.getString("PASSWORDCONTENT")),
 					decode(localBase64.decode(localResourceBundle.getString("PASSWORDCONTENT").getBytes())),
 					decode(paramInsertDocRq.getObjectStore()));
-			UtilFilenetP8.setFormatDate(ResourceBundle.getBundle("WcmApiConfig").getString("DATEFORMAT"));
-			UtilFilenetP8.setPatternDate(ResourceBundle.getBundle("WcmApiConfig").getString("DATEPATTERN"));
-			UtilFilenetP8.setTimeZone(ResourceBundle.getBundle("WcmApiConfig").getString("TIMEZONE"));
-			localObject1.setMultivalueSplit(ResourceBundle.getBundle("WcmApiConfig").getString("SPLITCHARACTER"));
+			UtilFilenetP8.setFormatDate(BUNDLE.getString("DATEFORMAT"));
+			UtilFilenetP8.setPatternDate(BUNDLE.getString("DATEPATTERN"));
+			UtilFilenetP8.setTimeZone(BUNDLE.getString("TIMEZONE"));
+			localObject1.setMultivalueSplit(BUNDLE.getString("SPLITCHARACTER"));
 			byte[] arrayOfByte = paramInsertDocRq.getContent();
 			if (writeFile(arrayOfByte, fName)) {
 				this.log.debug("Temp Document created: " + fName);
