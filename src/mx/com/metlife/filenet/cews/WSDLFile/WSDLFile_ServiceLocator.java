@@ -22,7 +22,7 @@ public class WSDLFile_ServiceLocator extends org.apache.axis.client.Service impl
     }
 
     // Use to get a proxy class for WSDLFileSOAP
-    private java.lang.String WSDLFileSOAP_address = "http://localhost:8080/FilenetWS/services/WSDLFileSOAP";
+    private java.lang.String WSDLFileSOAP_address = "http://tempuri.org/FilenetWS/services/WSDLFileSOAP";
 
     public java.lang.String getWSDLFileSOAPAddress() {
         return WSDLFileSOAP_address;

@@ -12,7 +12,7 @@ public class SearchDocRs  implements java.io.Serializable {
 
     private java.lang.String errStatDesc;
 
-    private mx.com.metlife.filenet.cews.WSDLFile.Metadata[][] documents;
+    private mx.com.metlife.filenet.cews.WSDLFile.Document[] documents;
 
     public SearchDocRs() {
     }
@@ -20,7 +20,7 @@ public class SearchDocRs  implements java.io.Serializable {
     public SearchDocRs(
            java.lang.String operationStatCd,
            java.lang.String errStatDesc,
-           mx.com.metlife.filenet.cews.WSDLFile.Metadata[][] documents) {
+           mx.com.metlife.filenet.cews.WSDLFile.Document[] documents) {
            this.operationStatCd = operationStatCd;
            this.errStatDesc = errStatDesc;
            this.documents = documents;
@@ -72,7 +72,7 @@ public class SearchDocRs  implements java.io.Serializable {
      * 
      * @return documents
      */
-    public mx.com.metlife.filenet.cews.WSDLFile.Metadata[][] getDocuments() {
+    public mx.com.metlife.filenet.cews.WSDLFile.Document[] getDocuments() {
         return documents;
     }
 
@@ -82,7 +82,7 @@ public class SearchDocRs  implements java.io.Serializable {
      * 
      * @param documents
      */
-    public void setDocuments(mx.com.metlife.filenet.cews.WSDLFile.Metadata[][] documents) {
+    public void setDocuments(mx.com.metlife.filenet.cews.WSDLFile.Document[] documents) {
         this.documents = documents;
     }
 
@@ -161,9 +161,9 @@ public class SearchDocRs  implements java.io.Serializable {
         elemField = new org.apache.axis.description.ElementDesc();
         elemField.setFieldName("documents");
         elemField.setXmlName(new javax.xml.namespace.QName("", "Documents"));
-        elemField.setXmlType(new javax.xml.namespace.QName("http://cews.filenet.metlife.com.mx/WSDLFile/", "Document"));
-        elemField.setMinOccurs(0);
+        elemField.setXmlType(new javax.xml.namespace.QName("http://cews.filenet.metlife.com.mx/WSDLFile/", "Documents"));
         elemField.setNillable(false);
+        elemField.setMinOccurs(1);
         elemField.setItemQName(new javax.xml.namespace.QName("", "Document"));
         typeDesc.addFieldDesc(elemField);
     }

@@ -4,6 +4,7 @@ import com.filenet.api.constants.Cardinality;
 import com.filenet.api.constants.TypeID;
 import com.filenet.api.core.ContentTransfer;
 import com.filenet.api.core.Factory.Folder;
+import com.filenet.api.util.Id;
 import com.filenet.wcm.api.BadReferenceException;
 import com.filenet.wcm.api.BaseRuntimeException;
 import com.filenet.wcm.api.Document;
@@ -111,7 +112,8 @@ public class Util {
 			List localList2 = localUtilFilenetP8.query(fixParams(localHashMap1), str3, where);
 			this.log.debug("Results : ".concat(String.valueOf(localList2.size())));
 			String[] arrayOfString = fixParams(localHashMap1).split(",");
-			Metadata[][] arrayOfMetadata = new Metadata[localList2.size()][];
+			//Metadata[][] arrayOfMetadata = new Metadata[localList2.size()][];
+			mx.com.metlife.filenet.cews.WSDLFile.Document[] arrayOfMetadata = new mx.com.metlife.filenet.cews.WSDLFile.Document[localList2.size()];
 			int i = localList2.size();
 			for (int j = 0; j < i; j++) {
 				HashMap localHashMap2 = (HashMap) localList2.get(j);
@@ -137,7 +139,9 @@ public class Util {
 					}
 					arrayOfMetadata1[k] = localMetadata;
 				}
-				arrayOfMetadata[j] = arrayOfMetadata1;
+				//arrayOfMetadata[j] = arrayOfMetadata1;
+				arrayOfMetadata[j]=new mx.com.metlife.filenet.cews.WSDLFile.Document();
+				arrayOfMetadata[j].setDocuments( arrayOfMetadata1);
 			}
 			localSearchDocRs.setDocuments(arrayOfMetadata);
 			localSearchDocRs.setErrStatDesc("");
@@ -384,8 +388,10 @@ public class Util {
 				this.log.debug("Document on CE created: " + fName);
 				new java.io.File(fName).delete();
 				this.log.debug("Temp Document deleted: " + fName);
-				this.log.debug("ID Document created: " + localObject2.getProperties().getIdValue("Id"));				
-				localInsertDocRs.setGUID(localBase64.encode(localObject2.getProperties().getIdValue("Id").toString().getBytes()));
+				Id idValue = localObject2.getProperties().getIdValue("Id");
+				this.log.debug("ID Document created: " + idValue);				
+				//localInsertDocRs.setGUID(localBase64.encode(localObject2.getProperties().getIdValue("Id").toString().getBytes()));
+				localInsertDocRs.setGUID((idValue.toString().getBytes()));
 				localInsertDocRs.setOperationStatCd("000");
 			}
 		} catch (Exception localException1) {

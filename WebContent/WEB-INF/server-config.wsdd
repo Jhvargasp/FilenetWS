@@ -1,74 +1,207 @@
-<ns1:deployment xmlns="http://xml.apache.org/axis/wsdd/" xmlns:java="http://xml.apache.org/axis/wsdd/providers/java" xmlns:ns1="http://xml.apache.org/axis/wsdd/">
- <ns1:globalConfiguration>
-  <ns1:parameter name="sendMultiRefs" value="true"/>
-  <ns1:parameter name="disablePrettyXML" value="true"/>
-  <ns1:parameter name="adminPassword" value="admin"/>
-  <ns1:parameter name="attachments.Directory" value="C:\workspaceeclipse\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\FilenetWS\WEB-INF\attachments"/>
-  <ns1:parameter name="dotNetSoapEncFix" value="true"/>
-  <ns1:parameter name="enableNamespacePrefixOptimization" value="false"/>
-  <ns1:parameter name="sendXMLDeclaration" value="true"/>
-  <ns1:parameter name="sendXsiTypes" value="true"/>
-  <ns1:parameter name="attachments.implementation" value="org.apache.axis.attachments.AttachmentsImpl"/>
-  <ns1:requestFlow>
-   <ns1:handler type="java:org.apache.axis.handlers.JWSHandler">
-    <ns1:parameter name="scope" value="session"/>
-   </ns1:handler>
-   <ns1:handler type="java:org.apache.axis.handlers.JWSHandler">
-    <ns1:parameter name="scope" value="request"/>
-    <ns1:parameter name="extension" value=".jwr"/>
-   </ns1:handler>
-  </ns1:requestFlow>
- </ns1:globalConfiguration>
- <ns1:handler name="URLMapper" type="java:org.apache.axis.handlers.http.URLMapper"/>
- <ns1:handler name="Authenticate" type="java:org.apache.axis.handlers.SimpleAuthenticationHandler"/>
- <ns1:handler name="LocalResponder" type="java:org.apache.axis.transport.local.LocalResponder"/>
- <ns1:service name="WSDLFileSOAP" provider="java:RPC" style="document" use="literal">
-  <ns1:parameter name="allowedMethods" value="*"/>
-  <ns1:parameter name="typeMappingVersion" value="1.2"/>
-  <ns1:parameter name="wsdlPortType" value="WSDLFile"/>
-  <ns1:parameter name="className" value="mx.com.metlife.filenet.cews.WSDLFile.WSDLFileSOAPSkeleton"/>
-  <ns1:parameter name="wsdlServicePort" value="WSDLFileSOAP"/>
-  <ns1:parameter name="wsdlTargetNamespace" value="http://cews.filenet.metlife.com.mx/WSDLFile/"/>
-  <ns1:parameter name="wsdlServiceElement" value="WSDLFile"/>
-  <ns1:parameter name="schemaUnqualified" value="http://cews.filenet.metlife.com.mx/WSDLFile/"/>
-  <ns2:typeMapping deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle="" qname="ns1:&gt;GetDocRs" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" type="java:mx.com.metlife.filenet.cews.WSDLFile.GetDocRs" xmlns:ns1="http://cews.filenet.metlife.com.mx/WSDLFile/" xmlns:ns2="http://xml.apache.org/axis/wsdd/"/>
-  <ns1:typeMapping deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle="" qname="ns2:&gt;InsertDocRq" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" type="java:mx.com.metlife.filenet.cews.WSDLFile.InsertDocRq" xmlns:ns2="http://cews.filenet.metlife.com.mx/WSDLFile/"/>
-  <ns1:typeMapping deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle="" qname="ns3:Metadata" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" type="java:mx.com.metlife.filenet.cews.WSDLFile.Metadata" xmlns:ns3="http://cews.filenet.metlife.com.mx/WSDLFile/"/>
-  <ns1:typeMapping deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle="" qname="ns4:&gt;InsertDocRs" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" type="java:mx.com.metlife.filenet.cews.WSDLFile.InsertDocRs" xmlns:ns4="http://cews.filenet.metlife.com.mx/WSDLFile/"/>
-  <ns1:typeMapping deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle="" qname="ns5:Security" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" type="java:mx.com.metlife.filenet.cews.WSDLFile.Security" xmlns:ns5="http://cews.filenet.metlife.com.mx/WSDLFile/"/>
-  <ns1:typeMapping deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle="" qname="ns6:&gt;SearchDocRs" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" type="java:mx.com.metlife.filenet.cews.WSDLFile.SearchDocRs" xmlns:ns6="http://cews.filenet.metlife.com.mx/WSDLFile/"/>
-  <ns1:typeMapping deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle="" qname="ns7:&gt;GetDocRq" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" type="java:mx.com.metlife.filenet.cews.WSDLFile.GetDocRq" xmlns:ns7="http://cews.filenet.metlife.com.mx/WSDLFile/"/>
-  <ns1:typeMapping deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle="" qname="ns8:&gt;SearchDocRq" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" type="java:mx.com.metlife.filenet.cews.WSDLFile.SearchDocRq" xmlns:ns8="http://cews.filenet.metlife.com.mx/WSDLFile/"/>
-  <ns1:typeMapping deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle="" qname="ns9:File" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" type="java:mx.com.metlife.filenet.cews.WSDLFile.File" xmlns:ns9="http://cews.filenet.metlife.com.mx/WSDLFile/"/>
-  <ns1:arrayMapping innerType="ns10:Metadata" languageSpecificType="java:mx.com.metlife.filenet.cews.WSDLFile.Metadata[]" qname="ns10:Document" xmlns:ns10="http://cews.filenet.metlife.com.mx/WSDLFile/"/>
-  <ns1:arrayMapping innerType="ns11:Security" languageSpecificType="java:mx.com.metlife.filenet.cews.WSDLFile.Security[]" qname="ns11:SecurityGroup" xmlns:ns11="http://cews.filenet.metlife.com.mx/WSDLFile/"/>
-  <ns1:arrayMapping innerType="ns12:Document" languageSpecificType="java:mx.com.metlife.filenet.cews.WSDLFile.Metadata[][]" qname="ns12:Documents" xmlns:ns12="http://cews.filenet.metlife.com.mx/WSDLFile/"/>
- </ns1:service>
- <ns1:service name="AdminService" provider="java:MSG">
-  <ns1:parameter name="allowedMethods" value="AdminService"/>
-  <ns1:parameter name="enableRemoteAdmin" value="false"/>
-  <ns1:parameter name="className" value="org.apache.axis.utils.Admin"/>
-  <ns1:namespace>http://xml.apache.org/axis/wsdd/</ns1:namespace>
- </ns1:service>
- <ns1:service name="Version" provider="java:RPC">
-  <ns1:parameter name="allowedMethods" value="getVersion"/>
-  <ns1:parameter name="className" value="org.apache.axis.Version"/>
- </ns1:service>
- <ns1:transport name="http">
-  <ns1:requestFlow>
-   <ns1:handler type="URLMapper"/>
-   <ns1:handler type="java:org.apache.axis.handlers.http.HTTPAuthHandler"/>
-  </ns1:requestFlow>
-  <ns1:parameter name="qs:list" value="org.apache.axis.transport.http.QSListHandler"/>
-  <ns1:parameter name="qs:wsdl" value="org.apache.axis.transport.http.QSWSDLHandler"/>
-  <ns1:parameter name="qs.list" value="org.apache.axis.transport.http.QSListHandler"/>
-  <ns1:parameter name="qs.method" value="org.apache.axis.transport.http.QSMethodHandler"/>
-  <ns1:parameter name="qs:method" value="org.apache.axis.transport.http.QSMethodHandler"/>
-  <ns1:parameter name="qs.wsdl" value="org.apache.axis.transport.http.QSWSDLHandler"/>
- </ns1:transport>
- <ns1:transport name="local">
-  <ns1:responseFlow>
-   <ns1:handler type="LocalResponder"/>
-  </ns1:responseFlow>
- </ns1:transport>
+<ns1:deployment xmlns="http://xml.apache.org/axis/wsdd/"
+	xmlns:java="http://xml.apache.org/axis/wsdd/providers/java" xmlns:ns1="http://xml.apache.org/axis/wsdd/">
+	<ns1:globalConfiguration>
+		<ns1:parameter name="sendMultiRefs" value="true" />
+		<ns1:parameter name="disablePrettyXML" value="true" />
+		<ns1:parameter name="adminPassword" value="admin" />
+		<ns1:parameter name="attachments.Directory"
+			value="C:\workspaceeclipse\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\FilenetWS\WEB-INF\attachments" />
+		<ns1:parameter name="dotNetSoapEncFix" value="true" />
+		<ns1:parameter name="enableNamespacePrefixOptimization"
+			value="false" />
+		<ns1:parameter name="sendXMLDeclaration" value="true" />
+		<ns1:parameter name="attachments.implementation"
+			value="org.apache.axis.attachments.AttachmentsImpl" />
+		<ns1:parameter name="sendXsiTypes" value="true" />
+		<ns1:requestFlow>
+			<ns1:handler type="java:org.apache.axis.handlers.JWSHandler">
+				<ns1:parameter name="scope" value="session" />
+			</ns1:handler>
+			<ns1:handler type="java:org.apache.axis.handlers.JWSHandler">
+				<ns1:parameter name="scope" value="request" />
+				<ns1:parameter name="extension" value=".jwr" />
+			</ns1:handler>
+		</ns1:requestFlow>
+	</ns1:globalConfiguration>
+	<ns1:handler name="URLMapper"
+		type="java:org.apache.axis.handlers.http.URLMapper" />
+	<ns1:handler name="Authenticate"
+		type="java:org.apache.axis.handlers.SimpleAuthenticationHandler" />
+	<ns1:handler name="LocalResponder"
+		type="java:org.apache.axis.transport.local.LocalResponder" />
+	<ns1:service name="WSDLFileSOAP" provider="java:RPC" style="document"
+		use="literal">
+		<ns1:parameter name="allowedMethods" value="*" />
+		<ns1:parameter name="typeMappingVersion" value="1.2" />
+		<ns1:parameter name="wsdlPortType" value="WSDLFile" />
+		<ns1:parameter name="className"
+			value="mx.com.metlife.filenet.cews.WSDLFile.WSDLFileSOAPSkeleton" />
+		<ns1:parameter name="wsdlServicePort" value="WSDLFileSOAP" />
+		<ns1:parameter name="wsdlTargetNamespace"
+			value="http://cews.filenet.metlife.com.mx/WSDLFile/" />
+		<ns1:parameter name="wsdlServiceElement" value="WSDLFile" />
+		<ns1:parameter name="schemaUnqualified"
+			value="http://cews.filenet.metlife.com.mx/WSDLFile/" />
+		<ns2:typeMapping
+			deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+			encodingStyle="" qname="ns1:MetadataValida"
+			serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" type="java:mx.com.metlife.filenet.cews.WSDLFile.MetadataValida"
+			xmlns:ns1="http://cews.filenet.metlife.com.mx/WSDLFile/" xmlns:ns2="http://xml.apache.org/axis/wsdd/" />
+		<ns1:typeMapping
+			deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+			encodingStyle="" qname="ns2:DocsError"
+			serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" type="java:mx.com.metlife.filenet.cews.WSDLFile.DocsError"
+			xmlns:ns2="http://cews.filenet.metlife.com.mx/WSDLFile/" />
+		<ns1:typeMapping
+			deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+			encodingStyle="" qname="ns3:UpdateMetadataRqType"
+			serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+			type="java:mx.com.metlife.filenet.cews.WSDLFile.UpdateMetadataRqType"
+			xmlns:ns3="http://cews.filenet.metlife.com.mx/WSDLFile/" />
+		<ns1:typeMapping
+			deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+			encodingStyle="" qname="ns4:MetadataStr"
+			serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" type="java:mx.com.metlife.filenet.cews.WSDLFile.MetadataStr"
+			xmlns:ns4="http://cews.filenet.metlife.com.mx/WSDLFile/" />
+		<ns1:typeMapping
+			deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+			encodingStyle="" qname="ns5:&gt;SearchDocRs"
+			serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" type="java:mx.com.metlife.filenet.cews.WSDLFile.SearchDocRs"
+			xmlns:ns5="http://cews.filenet.metlife.com.mx/WSDLFile/" />
+
+		<ns1:typeMapping
+			deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+			encodingStyle="" qname="ns5:Document"
+			serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" type="java:mx.com.metlife.filenet.cews.WSDLFile.Document"
+			xmlns:ns5="http://cews.filenet.metlife.com.mx/WSDLFile/" />
+
+		<ns1:typeMapping
+			deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+			encodingStyle="" qname="ns6:&gt;GetDocRq"
+			serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" type="java:mx.com.metlife.filenet.cews.WSDLFile.GetDocRq"
+			xmlns:ns6="http://cews.filenet.metlife.com.mx/WSDLFile/" />
+		<ns1:typeMapping
+			deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+			encodingStyle="" qname="ns7:&gt;SearchDocRq"
+			serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" type="java:mx.com.metlife.filenet.cews.WSDLFile.SearchDocRq"
+			xmlns:ns7="http://cews.filenet.metlife.com.mx/WSDLFile/" />
+		<ns1:typeMapping
+			deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+			encodingStyle="" qname="ns8:File"
+			serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" type="java:mx.com.metlife.filenet.cews.WSDLFile.File"
+			xmlns:ns8="http://cews.filenet.metlife.com.mx/WSDLFile/" />
+		<ns1:typeMapping
+			deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+			encodingStyle="" qname="ns9:&gt;GetDocRs"
+			serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" type="java:mx.com.metlife.filenet.cews.WSDLFile.GetDocRs"
+			xmlns:ns9="http://cews.filenet.metlife.com.mx/WSDLFile/" />
+		<ns1:typeMapping
+			deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+			encodingStyle="" qname="ns10:DocError"
+			serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" type="java:mx.com.metlife.filenet.cews.WSDLFile.DocError"
+			xmlns:ns10="http://cews.filenet.metlife.com.mx/WSDLFile/" />
+		<ns1:typeMapping
+			deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+			encodingStyle="" qname="ns11:&gt;InsertDocRq"
+			serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" type="java:mx.com.metlife.filenet.cews.WSDLFile.InsertDocRq"
+			xmlns:ns11="http://cews.filenet.metlife.com.mx/WSDLFile/" />
+		<ns1:typeMapping
+			deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+			encodingStyle="" qname="ns12:&gt;UpdateMetadataRq"
+			serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+			type="java:mx.com.metlife.filenet.cews.WSDLFile.UpdateMetadataRq"
+			xmlns:ns12="http://cews.filenet.metlife.com.mx/WSDLFile/" />
+		<ns1:typeMapping
+			deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+			encodingStyle="" qname="ns13:Metadata"
+			serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" type="java:mx.com.metlife.filenet.cews.WSDLFile.Metadata"
+			xmlns:ns13="http://cews.filenet.metlife.com.mx/WSDLFile/" />
+		<ns1:typeMapping
+			deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+			encodingStyle="" qname="ns14:&gt;InsertDocValidaRq"
+			serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+			type="java:mx.com.metlife.filenet.cews.WSDLFile.InsertDocValidaRq"
+			xmlns:ns14="http://cews.filenet.metlife.com.mx/WSDLFile/" />
+		<ns1:typeMapping
+			deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+			encodingStyle="" qname="ns15:&gt;InsertDocRs"
+			serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" type="java:mx.com.metlife.filenet.cews.WSDLFile.InsertDocRs"
+			xmlns:ns15="http://cews.filenet.metlife.com.mx/WSDLFile/" />
+		<ns1:typeMapping
+			deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+			encodingStyle="" qname="ns16:&gt;UpdateMetadataRs"
+			serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+			type="java:mx.com.metlife.filenet.cews.WSDLFile.UpdateMetadataRs"
+			xmlns:ns16="http://cews.filenet.metlife.com.mx/WSDLFile/" />
+		<ns1:typeMapping
+			deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+			encodingStyle="" qname="ns17:Security"
+			serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" type="java:mx.com.metlife.filenet.cews.WSDLFile.Security"
+			xmlns:ns17="http://cews.filenet.metlife.com.mx/WSDLFile/" />
+		<ns1:typeMapping
+			deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+			encodingStyle="" qname="ns18:UpdateMetadataRsType"
+			serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+			type="java:mx.com.metlife.filenet.cews.WSDLFile.UpdateMetadataRsType"
+			xmlns:ns18="http://cews.filenet.metlife.com.mx/WSDLFile/" />
+			
+			
+		<ns1:arrayMapping innerType="ns19:Security"
+			languageSpecificType="java:mx.com.metlife.filenet.cews.WSDLFile.Security[]"
+			qname="ns19:SecurityGroup" xmlns:ns19="http://cews.filenet.metlife.com.mx/WSDLFile/" />
+			
+		<ns1:arrayMapping innerType="ns20:Document"
+			languageSpecificType="java:mx.com.metlife.filenet.cews.WSDLFile.Document[]"
+			qname="ns20:Documents" xmlns:ns20="http://cews.filenet.metlife.com.mx/WSDLFile/" />
+			
+		<ns1:arrayMapping innerType="ns21:MetadataStr"
+			languageSpecificType="java:mx.com.metlife.filenet.cews.WSDLFile.MetadataStr[]"
+			qname="ns21:PropertiesStr" xmlns:ns21="http://cews.filenet.metlife.com.mx/WSDLFile/" />
+			
+		<ns1:arrayMapping innerType="ns22:Metadata"
+			languageSpecificType="java:mx.com.metlife.filenet.cews.WSDLFile.Metadata[]"
+			qname="ns22:Document" xmlns:ns22="http://cews.filenet.metlife.com.mx/WSDLFile/" />
+			
+		<ns1:arrayMapping innerType="ns23:MetadataValida"
+			languageSpecificType="java:mx.com.metlife.filenet.cews.WSDLFile.MetadataValida[]"
+			qname="ns23:DocumentValida" xmlns:ns23="http://cews.filenet.metlife.com.mx/WSDLFile/" />
+		<ns1:arrayMapping innerType="xsd:string"
+			languageSpecificType="java:java.lang.String[]" qname="ns24:GUIDs"
+			xmlns:ns24="http://cews.filenet.metlife.com.mx/WSDLFile/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
+	
+	
+	</ns1:service>
+	<ns1:service name="AdminService" provider="java:MSG">
+		<ns1:parameter name="allowedMethods" value="AdminService" />
+		<ns1:parameter name="enableRemoteAdmin" value="false" />
+		<ns1:parameter name="className" value="org.apache.axis.utils.Admin" />
+		<ns1:namespace>http://xml.apache.org/axis/wsdd/</ns1:namespace>
+	</ns1:service>
+	<ns1:service name="Version" provider="java:RPC">
+		<ns1:parameter name="allowedMethods" value="getVersion" />
+		<ns1:parameter name="className" value="org.apache.axis.Version" />
+	</ns1:service>
+	<ns1:transport name="http">
+		<ns1:requestFlow>
+			<ns1:handler type="URLMapper" />
+			<ns1:handler type="java:org.apache.axis.handlers.http.HTTPAuthHandler" />
+		</ns1:requestFlow>
+		<ns1:parameter name="qs:list"
+			value="org.apache.axis.transport.http.QSListHandler" />
+		<ns1:parameter name="qs:wsdl"
+			value="org.apache.axis.transport.http.QSWSDLHandler" />
+		<ns1:parameter name="qs.list"
+			value="org.apache.axis.transport.http.QSListHandler" />
+		<ns1:parameter name="qs.method"
+			value="org.apache.axis.transport.http.QSMethodHandler" />
+		<ns1:parameter name="qs:method"
+			value="org.apache.axis.transport.http.QSMethodHandler" />
+		<ns1:parameter name="qs.wsdl"
+			value="org.apache.axis.transport.http.QSWSDLHandler" />
+	</ns1:transport>
+	<ns1:transport name="local">
+		<ns1:responseFlow>
+			<ns1:handler type="LocalResponder" />
+		</ns1:responseFlow>
+	</ns1:transport>
 </ns1:deployment>

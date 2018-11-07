@@ -19,7 +19,7 @@
 					<xsd:sequence>
 						<xsd:element maxOccurs="1" minOccurs="1" name="OperationStatCd" type="xsd:string"/>
 						<xsd:element maxOccurs="1" minOccurs="0" name="ErrStatDesc" type="xsd:string"/>
-						<xsd:element maxOccurs="1" minOccurs="0" name="Documents" type="tns:Documents"/>
+						<xsd:element maxOccurs="1" minOccurs="1" name="Documents" type="tns:Documents"/>
 					</xsd:sequence>
 				</xsd:complexType>
 			</xsd:element>
