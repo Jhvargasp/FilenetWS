@@ -1,3 +1,15 @@
 Manifest-Version: 1.0
 Class-Path: 
 
+<? xml sürümü = " 1.0 " kodlama = " UTF-8 " ?>
+< sınıfyolu >
+	< Classpathentry  hariç = " ** / bower_components / * | ** / node_modules / * |. ** / * min.js "  tür = " src "  yol = " WebContent " />
+	< classpathentry  kind = " con "  path = " org.eclipse.wst.jsdt.launching.JRE_CONTAINER " />
+	< classpathentry  kind = " con "  path = " org.eclipse.wst.jsdt.launching.WebProject " >
+		< özellikler >
+			< özellik  adı = " gizle "  değer = " doğru " />
+		</ nitelikler >
+	</ classpathentry >
+	< classpathentry  kind = " con "  path = " org.eclipse.wst.jsdt.launching.baseBrowserLibrary " />
+	< classpathentry  kind = " output "  yol = " " />
+</ classpath >
